@@ -1,0 +1,612 @@
+"use client";
+
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { MapPin, Sparkles } from "lucide-react";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
+import MarketAnalysis from "@/components/market/MarketAnalysis";
+import AdvisoryPanel from "@/components/advisory/AdvisoryPanel";
+import AIAdvisor from "@/components/ai/AIAdvisor";
+import BusinessSummary from "@/components/dashboard/BusinessSummary";
+import LoanSummary from "@/components/dashboard/LoanSummary";
+import RepaymentTable from "@/components/dashboard/RepaymentTable";
+import SchemeCard from "@/components/dashboard/SchemeCard";
+import ViabilityScore from "@/components/dashboard/ViabilityScore";
+import NoFitGuidance from "@/components/dashboard/NoFitGuidance";
+
+import BusinessPlan from "@/components/ai/BusinessPlan";
+import OpportunityCard from "@/components/ai/OpportunityCard";
+import RiskCard from "@/components/ai/RiskCard";
+import SWOTCard from "@/components/ai/SWOTCard";
+
+import { generateAdvisory } from "@/lib/advisory/generate-advisory";
+import { analyzeBusiness } from "@/lib/business/analyze-business";
+
+interface MarketResult {
+  totalBusinesses?: number;
+  competitorCount?: number;
+  competitionLevel?: string;
+  marketDensity?: number;
+  businessTypeDistribution?: Record<string, number>;
+  underservedCategories?: string[];
+  opportunities?: string[];
+  risks?: string[];
+  places?: any[];
+  competitors?: any[];
+  suppliers?: any[];
+  latitude?: number;
+  longitude?: number;
+}
+
+function DashboardContent() {
+  const searchParams = useSearchParams();
+  const { language, t } = useLanguage();
+
+  const [assessment, setAssessment] = useState<any | null>(null);
+  const [market, setMarket] = useState<MarketResult | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const storedAssessment =
+        sessionStorage.getItem("assessment") ||
+        sessionStorage.getItem("gram-udyam-assessment");
+
+      if (storedAssessment) {
+        setAssessment(
+          JSON.parse(storedAssessment)
+        );
+        setLoading(false);
+        return;
+      }
+
+      /*
+       * Backward compatibility:
+       * If the assessment was opened using query parameters,
+       * continue supporting that flow.
+       */
+      const params = new URLSearchParams(
+        window.location.search
+      );
+
+      const fallbackAssessment = {
+        businessName:
+          params.get("businessName") ||
+          "Your Business",
+
+        category:
+          params.get("category") ||
+          "General",
+
+        village:
+          params.get("village") || "",
+
+        block:
+          params.get("block") || "",
+
+        district:
+          params.get("district") || "",
+
+        state:
+          params.get("state") || "",
+
+        marginCapital: Number(
+          params.get("marginCapital") || 0
+        ),
+
+        marketDemand: Number(
+          params.get("marketDemand") || 50
+        ),
+
+        competition: Number(
+          params.get("competition") || 50
+        ),
+
+        budgetFit: Number(
+          params.get("budgetFit") || 50
+        ),
+
+        localResources: Number(
+          params.get("localResources") || 50
+        ),
+
+        seasonalRisk: Number(
+          params.get("seasonalRisk") || 50
+        ),
+
+        profitPotential: Number(
+          params.get("profitPotential") || 50
+        ),
+
+        experienceYears: Number(
+          params.get("experienceYears") || 1
+        ),
+
+        hasLandOrShop:
+          params.get("hasLandOrShop") !== "false",
+
+        monthlyRevenue: Number(
+          params.get("monthlyRevenue") || 0
+        ),
+
+        operatingExpenses: Number(
+          params.get("operatingExpenses") || 0
+        ),
+      };
+
+      setAssessment(fallbackAssessment);
+    } catch (error) {
+      console.error(
+        "Unable to load assessment:",
+        error
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div className="text-center">
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600" />
+
+          <p className="mt-4 text-sm text-gray-500">
+            {t("loading")}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!assessment) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
+        <div className="max-w-md rounded-2xl border bg-white p-8 text-center shadow-sm">
+          <h2 className="text-xl font-bold text-gray-900">
+            {t("noAssessmentFound")}
+          </h2>
+
+          <p className="mt-2 text-sm text-gray-500">
+            {t("completeAssessmentFirst")}
+          </p>
+
+          <a
+            href="/assessment"
+            className="mt-5 inline-block rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700"
+          >
+            {t("startAssessment")}
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  const result = analyzeBusiness(assessment);
+
+  const advisory = generateAdvisory({
+    businessName: assessment.businessName,
+    category: assessment.category,
+    village: assessment.village,
+    district: assessment.district,
+    state: assessment.state,
+
+    viabilityScore: result.viability.score,
+    viabilityRating: result.viability.rating,
+
+    projectCost: result.finance.projectCost,
+    loanAmount: result.finance.loanAmount,
+
+    schemeName: result.finance.scheme.name,
+    schemeSuitable: result.finance.scheme.suitable,
+
+    monthlyEMI: result.finance.monthlyEMI,
+
+    competitorCount:
+      market?.competitorCount ?? 0,
+
+    competitionLevel:
+      market?.competitionLevel ?? "UNKNOWN",
+
+    marketOpportunities:
+      market?.opportunities ?? [],
+
+    marketRisks:
+      market?.risks ?? [],
+
+    strengths: result.strengths,
+    risks: result.risks,
+    opportunities: result.opportunities,
+  });
+
+  return (
+    <main className="min-h-screen bg-slate-50">
+      <Navbar />
+
+      {/* Header */}
+      <section className="border-b bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-8">
+          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <div>
+              <div className="flex items-center gap-2 text-sm font-medium text-indigo-600">
+                <Sparkles size={16} />
+                Gram Udyam Advisor
+              </div>
+
+              <h1 className="mt-2 text-3xl font-bold text-gray-900">
+                {assessment.businessName}
+              </h1>
+
+              <p className="mt-2 flex items-center gap-2 text-sm text-gray-500">
+                <MapPin size={16} />
+
+                {[
+                  assessment.village,
+                  assessment.block,
+                  assessment.district,
+                  assessment.state,
+                ]
+                  .filter(Boolean)
+                  .join(", ") ||
+                  "Local business assessment"}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Link
+                href={`/report?business=${encodeURIComponent(assessment.businessName)}`}
+                className="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 inline-flex items-center gap-2"
+              >
+                📄 {t("viewReport")}
+              </Link>
+              <div className="rounded-xl bg-indigo-50 px-5 py-3">
+                <p className="text-xs font-medium uppercase tracking-wide text-indigo-600">
+                  {t("category")}
+                </p>
+
+                <p className="mt-1 font-semibold text-indigo-950">
+                  {assessment.category}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Main */}
+      <div className="mx-auto max-w-7xl space-y-8 px-6 py-8">
+        {/* Recommendation */}
+        <section className="rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
+          <p className="text-sm font-medium text-gray-500">
+            {t("overallRecommendation")}
+          </p>
+
+          <h2 className="mt-2 text-2xl font-bold text-gray-900">
+            {result.decision.replaceAll("_", " ")}
+          </h2>
+
+          <p className="mt-2 text-gray-600">
+            {result.viability.recommendation}
+          </p>
+        </section>
+
+        {/* Metrics */}
+        <div className="grid gap-6 md:grid-cols-4">
+          <MetricCard
+            title={t("viabilityScore")}
+            value={`${result.viability.score}/100`}
+          />
+
+          <MetricCard
+            title={t("projectCost")}
+            value={formatCurrency(
+              result.finance.projectCost
+            )}
+          />
+
+          <MetricCard
+            title={t("loanAmount")}
+            value={formatCurrency(
+              result.finance.loanAmount
+            )}
+          />
+
+          <MetricCard
+            title={t("competitors")}
+            value={
+              market
+                ? String(
+                    market.competitorCount ?? 0
+                  )
+                : t("loading")
+            }
+          />
+        </div>
+
+        {/* Viability */}
+        <ViabilityScore
+          score={result.viability.score}
+          rating={result.viability.rating}
+          recommendation={result.viability.recommendation}
+          factors={result.viability.factors}
+        />
+
+        {/* Business Summary */}
+        <BusinessSummary
+          business={assessment}
+        />
+
+        {/* Loan Summary */}
+        <LoanSummary
+          finance={result.finance}
+        />
+
+        {/* Scheme */}
+        <SchemeCard
+          scheme={result.finance.scheme}
+          projectCost={result.finance.projectCost}
+        />
+
+        {/* AI Advisor */}
+        <AIAdvisor
+          assessment={assessment}
+          result={result}
+          market={market}
+          language={language}
+        />
+
+        {/* Business Plan */}
+        <BusinessPlan
+          businessName={assessment.businessName}
+          category={assessment.category}
+          village={assessment.village}
+          district={assessment.district}
+          projectCost={
+            result.finance.projectCost
+          }
+          loanAmount={
+            result.finance.loanAmount
+          }
+          recommendation={
+            result.viability.recommendation
+          }
+          nextSteps={result.nextSteps}
+        />
+
+        {/* Repayment */}
+        {result.finance.scheme.suitable && (
+          <section>
+            <h2 className="mb-4 text-xl font-bold text-gray-900">
+              {t("repaymentEstimate")}
+            </h2>
+
+            <RepaymentTable
+              loanAmount={
+                result.finance.loanAmount
+              }
+              interestRate={
+                result.finance.scheme.interestRate
+              }
+              tenureYears={
+                result.finance.scheme.tenureYears
+              }
+              moratoriumMonths={
+                result.finance.scheme.moratoriumMonths
+              }
+            />
+          </section>
+        )}
+
+        <section>
+          <MarketAnalysis
+            village={assessment.village}
+            block={assessment.block}
+            district={assessment.district}
+            state={assessment.state}
+            businessType={assessment.category}
+            onAnalysis={(analysis: MarketResult) => {
+              setMarket(analysis);
+
+              try {
+                sessionStorage.setItem(
+                  "marketAnalysis",
+                  JSON.stringify(analysis)
+                );
+              } catch (error) {
+                console.error(
+                  "Unable to save market analysis:",
+                  error
+                );
+              }
+            }}
+          />
+        </section>
+
+        {/* Zero-Data Fallback Guidance (Module 3) */}
+        {market && market.totalBusinesses === 0 && (
+          <NoFitGuidance
+            title="Market Intelligence: Zero Commercial Listings Detected"
+            reason="No existing commercial entities or competitors were detected in OpenStreetMap or PostGIS records within your selected radius."
+            guidance={[
+              "First-mover advantage: You may be the primary or sole provider for this category in this village cluster.",
+              "Conduct 10–15 direct field interviews at weekly village haats or gram panchayat meetings before investing capital.",
+              "Verify availability of grid power, reliable road transport, and raw material access from the nearest block/district mandi.",
+              "Map out the nearest town supply routes to calculate logistics and fuel costs.",
+            ]}
+            alternatives={[
+              {
+                title: "Village Haat Customer Validation",
+                description: "Set up a temporary stall or display at the weekly village haat to test consumer price sensitivity and direct product demand.",
+                action: "Interview local customers during the upcoming village market day.",
+              },
+              {
+                title: "Block Mandi Logistics Mapping",
+                description: "Confirm whether wholesale delivery vans service your village or if you will need to arrange your own vehicle.",
+                action: "Inquire with wholesale stockists at the nearest block headquarter.",
+              },
+            ]}
+            isZeroData={true}
+          />
+        )}
+
+        {/* Market Summary */}
+        {market && (
+          <section className="grid gap-6 md:grid-cols-3">
+            <MetricCard
+              title={t("nearbyBusinesses")}
+              value={String(
+                market.totalBusinesses ?? 0
+              )}
+            />
+
+            <MetricCard
+              title={t("competitionLevelLabel")}
+              value={
+                market.competitionLevel ||
+                "UNKNOWN"
+              }
+            />
+
+            <MetricCard
+              title={t("marketDensity")}
+              value={`${market.marketDensity ?? 0}`}
+            />
+          </section>
+        )}
+
+        {/* SWOT */}
+        <SWOTCard
+          strengths={result.strengths}
+          weaknesses={result.risks}
+          opportunities={
+            market?.opportunities?.length
+              ? [
+                  ...result.opportunities,
+                  ...market.opportunities,
+                ]
+              : result.opportunities
+          }
+          threats={
+            market?.risks?.length
+              ? [
+                  ...result.risks,
+                  ...market.risks,
+                ]
+              : result.risks
+          }
+        />
+
+        {/* Opportunities / Risks */}
+        <div className="grid gap-6 lg:grid-cols-2">
+          <OpportunityCard
+            opportunities={
+              market?.opportunities?.length
+                ? [
+                    ...result.opportunities,
+                    ...market.opportunities,
+                  ]
+                : result.opportunities
+            }
+          />
+
+          <RiskCard
+            risks={
+              market?.risks?.length
+                ? [
+                    ...result.risks,
+                    ...market.risks,
+                  ]
+                : result.risks
+            }
+            mitigation={
+              advisory.riskMitigation
+            }
+          />
+        </div>
+
+        {/* Next Steps */}
+        <section className="rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
+          <h2 className="text-xl font-bold text-gray-900">
+            {t("recommendedNextSteps")}
+          </h2>
+
+          <div className="mt-5 space-y-3">
+            {result.nextSteps.map(
+              (step, index) => (
+                <div
+                  key={`${step}-${index}`}
+                  className="flex gap-3 rounded-xl border p-4 bg-slate-50/50"
+                >
+                  <span className="font-bold text-indigo-600">
+                    {index + 1}
+                  </span>
+
+                  <span className="text-sm text-gray-700">
+                    {step}
+                  </span>
+                </div>
+              )
+            )}
+          </div>
+        </section>
+
+        {/* AI Advisory */}
+        <AdvisoryPanel
+          advisory={advisory}
+          viabilityScore={
+            result.viability.score
+          }
+        />
+      </div>
+    </main>
+  );
+}
+
+function MetricCard({
+  title,
+  value,
+}: {
+  title: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+      <p className="text-sm text-gray-500">
+        {title}
+      </p>
+
+      <p className="mt-2 text-2xl font-bold text-gray-900">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-slate-50">
+          <div className="text-center">
+            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600" />
+            <p className="mt-4 text-sm text-gray-500">
+              Loading dashboard...
+            </p>
+          </div>
+        </div>
+      }
+    >
+      <DashboardContent />
+    </Suspense>
+  );
+}
