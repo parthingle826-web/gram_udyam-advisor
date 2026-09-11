@@ -2,6 +2,8 @@
 
 **AI-driven hyper-local business advisory and financial structuring assistant for rural micro-entrepreneurs.**
 
+🔗 **Live Demo:** [gram-udyam-advisor-bggiokqbl-parthingle826-2567s-projects.vercel.app](https://gram-udyam-advisor-bggiokqbl-parthingle826-2567s-projects.vercel.app/)
+
 Gram Udyam Advisor helps first-time rural entrepreneurs applying for government concessional-credit schemes (margin-money model) make data-backed business decisions — instead of relying on anecdotal success stories and guesswork. It combines a hyper-local market feasibility engine, a deterministic loan/scheme calculator, and a guided fallback path so no user is ever left without an answer.
 
 Built for **SIH 2026** and the **AI for Sustainability (1M1B × IBM)** internship program.
@@ -64,10 +66,14 @@ OTP-based mobile number login.
 | PDF Export | React PDF |
 | i18n | next-intl |
 | Testing | Vitest / Jest (unit), Playwright (end-to-end) |
+| Deployment | Vercel |
 
 ---
 
 ## 🚀 Getting Started
+
+### Live App
+Try it here: **https://gram-udyam-advisor-bggiokqbl-parthingle826-2567s-projects.vercel.app/**
 
 ### Prerequisites
 - Node.js 18+
@@ -169,3 +175,4 @@ The core feasibility report — market reach, opportunity analysis, SWOT, and pr
 ## 📄 License
 
 This project is submitted for SIH 2026 and the 1M1B × IBM AI for Sustainability internship program. License TBD — add one (e.g. MIT) before public release if applicable.
+
