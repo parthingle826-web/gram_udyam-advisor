@@ -128,8 +128,8 @@ App runs at `http://localhost:3000`.
 ### Run Tests
 
 ```bash
-npm run test        # unit tests (financial calculator)
-npm run test:e2e    # Playwright end-to-end flow
+npm run test        
+npm run test:e2e   
 ```
 
 ---
