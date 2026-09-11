@@ -52,7 +52,7 @@ function categorizePlace(
   const text = `${name} ${type}`.toLowerCase();
   const bType = (businessType || "").toLowerCase();
 
-  // Bank detection
+
   if (
     type === "bank" ||
     type === "atm" ||
@@ -66,7 +66,7 @@ function categorizePlace(
     return "bank";
   }
 
-  // Market detection
+ 
   if (
     type === "marketplace" ||
     type === "supermarket" ||
@@ -78,7 +78,7 @@ function categorizePlace(
     return "market";
   }
 
-  // Supplier detection
+  
   if (
     type === "wholesale" ||
     type === "hardware" ||
@@ -95,7 +95,7 @@ function categorizePlace(
     return "supplier";
   }
 
-  // Competitor detection
+  
   if (
     bType &&
     (text.includes(bType) ||
@@ -112,11 +112,7 @@ function categorizePlace(
   return "general";
 }
 
-/**
- * Find nearby businesses around the given coordinates.
- * Queries Supabase PostGIS local_businesses table first,
- * then falls back to Overpass OSM API with realistic cluster seeding.
- */
+
 export async function findNearbyBusinesses(
   latitude: number,
   longitude: number,
@@ -125,11 +121,11 @@ export async function findNearbyBusinesses(
 ): Promise<NearbyPlace[]> {
   const places: NearbyPlace[] = [];
 
-  // 1. Check Supabase PostGIS table if available
+ 
   try {
     const supabase = getSupabaseClient();
     if (supabase) {
-      // Rough bounding box in degrees (~1 deg lat = 111km)
+     
       const latDelta = radiusKm / 111;
       const lonDelta = radiusKm / (111 * Math.cos((latitude * Math.PI) / 180));
 
@@ -167,10 +163,10 @@ export async function findNearbyBusinesses(
       }
     }
   } catch {
-    // Non-blocking fallback to OSM
+    
   }
 
-  // 2. Query Overpass OSM API with timeout
+  
   const radiusMeters = Math.min(radiusKm * 1000, 10000);
   const query = `
     [out:json][timeout:12];
@@ -238,8 +234,7 @@ export async function findNearbyBusinesses(
     console.warn("Overpass OSM query skipped or timed out:", err);
   }
 
-  // 3. Fallback cluster generation if sparse rural area with 0 OSM records
-  // This guarantees realistic, filterable pins and ensures maps are interactive even in remote hamlets
+  
   if (places.length === 0) {
     const defaultCluster: Array<{
       name: string;

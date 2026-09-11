@@ -37,7 +37,7 @@ function MapController({ lat, lng }: { lat: number; lng: number }) {
   const map = useMap();
 
   useEffect(() => {
-    // Explicitly ensure all interaction handlers are active
+    
     map.dragging.enable();
     map.scrollWheelZoom.enable();
     map.doubleClickZoom.enable();
@@ -53,25 +53,25 @@ function MapController({ lat, lng }: { lat: number; lng: number }) {
   return null;
 }
 
-// Generate high-visibility SVG pin icons
+
 function createPinIcon(category: PlaceCategory | "center") {
-  let bgColor = "#4f46e5"; // Indigo
+  let bgColor = "#4f46e5";
   let iconSvg = "📍";
 
   if (category === "center") {
-    bgColor = "#059669"; // Emerald
+    bgColor = "#059669"; 
     iconSvg = "⭐";
   } else if (category === "competitor") {
-    bgColor = "#e11d48"; // Rose
+    bgColor = "#e11d48"; 
     iconSvg = "⚔️";
   } else if (category === "supplier") {
-    bgColor = "#0284c7"; // Sky blue
+    bgColor = "#0284c7"; 
     iconSvg = "📦";
   } else if (category === "market") {
-    bgColor = "#7c3aed"; // Violet
+    bgColor = "#7c3aed"; 
     iconSvg = "🛒";
   } else if (category === "bank") {
-    bgColor = "#d97706"; // Amber
+    bgColor = "#d97706"; 
     iconSvg = "🏦";
   }
 
@@ -156,7 +156,7 @@ export default function MarketMap({
             </span>
           </div>
 
-          {/* Filter Pills */}
+        
           <div className="flex flex-wrap items-center gap-1.5 text-xs">
             <button
               type="button"
@@ -225,7 +225,7 @@ export default function MarketMap({
         </div>
       </div>
 
-      {/* Leaflet Container */}
+     
       <div className="relative h-[440px] w-full">
         <MapContainer
           center={[latitude, longitude]}
@@ -248,7 +248,7 @@ export default function MarketMap({
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          {/* 2km Walkable Ring */}
+          
           <Circle
             center={[latitude, longitude]}
             radius={2000}
@@ -265,7 +265,7 @@ export default function MarketMap({
             </Popup>
           </Circle>
 
-          {/* 5km Primary Market Ring */}
+         
           <Circle
             center={[latitude, longitude]}
             radius={5000}
@@ -282,7 +282,7 @@ export default function MarketMap({
             </Popup>
           </Circle>
 
-          {/* 10km Regional Cluster Ring */}
+          
           <Circle
             center={[latitude, longitude]}
             radius={10000}
@@ -299,7 +299,7 @@ export default function MarketMap({
             </Popup>
           </Circle>
 
-          {/* Center Origin Pin */}
+         
           <Marker
             position={[latitude, longitude]}
             icon={createPinIcon("center")}
@@ -313,7 +313,7 @@ export default function MarketMap({
             </Popup>
           </Marker>
 
-          {/* Filtered Pins */}
+         
           {filteredPlaces.map((place) => {
             const category = place.category || "general";
             return (

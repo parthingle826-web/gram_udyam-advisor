@@ -59,7 +59,7 @@ export default function AdvisoryPanel({
   return (
     <section className="mt-8 space-y-6">
 
-      {/* Header */}
+     
       <div className="rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white shadow-lg">
         <div className="flex items-center gap-3">
           <div className="rounded-xl bg-white/20 p-3">
@@ -82,7 +82,7 @@ export default function AdvisoryPanel({
         </p>
       </div>
 
-      {/* Recommendation + confidence */}
+      
       <div className="grid gap-4 md:grid-cols-3">
 
         <div className="rounded-2xl border bg-white p-5 shadow-sm">
@@ -150,7 +150,7 @@ export default function AdvisoryPanel({
         )}
       </div>
 
-      {/* Key Reasons */}
+    
       <AdvisoryCard
         title="Why this recommendation?"
         icon={<Lightbulb size={22} />}
@@ -171,7 +171,7 @@ export default function AdvisoryPanel({
         </ul>
       </AdvisoryCard>
 
-      {/* Financial + Market */}
+     
       <div className="grid gap-6 md:grid-cols-2">
 
         <AdvisoryCard
@@ -190,7 +190,7 @@ export default function AdvisoryPanel({
 
       </div>
 
-      {/* Risk Mitigation */}
+     
       <AdvisoryCard
         title="Risk Mitigation"
         icon={<ShieldAlert size={22} />}
@@ -198,7 +198,7 @@ export default function AdvisoryPanel({
         <AdviceList items={advisory.riskMitigation} />
       </AdvisoryCard>
 
-      {/* Action Plan */}
+      
       <AdvisoryCard
         title="Recommended Action Plan"
         icon={<CheckCircle2 size={22} />}
@@ -230,7 +230,7 @@ export default function AdvisoryPanel({
         </div>
       </AdvisoryCard>
 
-      {/* Alternatives */}
+    
       {advisory.alternativeIdeas.length > 0 && (
         <AdvisoryCard
           title="Alternative Business Ideas"
@@ -251,7 +251,7 @@ export default function AdvisoryPanel({
         </AdvisoryCard>
       )}
 
-      {/* Responsible AI note */}
+      
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
         <p className="text-sm text-amber-800">
           <strong>Important:</strong> This advisory is an AI-assisted
@@ -266,9 +266,6 @@ export default function AdvisoryPanel({
 }
 
 
-/* -----------------------------
-   Reusable Components
------------------------------- */
 
 function AdvisoryCard({
   title,

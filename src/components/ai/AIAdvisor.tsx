@@ -314,7 +314,7 @@ export default function AIAdvisor({
 
   return (
     <section className="mt-8 space-y-6">
-      {/* Header */}
+   
       <div className="rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
@@ -347,7 +347,7 @@ export default function AIAdvisor({
         </div>
       </div>
 
-      {/* Market information */}
+    
       {market && (
         <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-5">
           <h3 className="font-semibold text-indigo-900">
@@ -382,7 +382,7 @@ export default function AIAdvisor({
         </div>
       )}
 
-      {/* Error */}
+     
       {error && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           <strong>
@@ -392,7 +392,7 @@ export default function AIAdvisor({
         </div>
       )}
 
-      {/* Loading */}
+      
       {loading && (
         <div className="rounded-xl border border-gray-200 bg-white p-8 text-center shadow-sm">
           <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600" />
@@ -407,11 +407,11 @@ export default function AIAdvisor({
         </div>
       )}
 
-      {/* Result */}
+     
       {advisory &&
         !loading && (
           <div className="space-y-6">
-            {/* Main Recommendation */}
+          
             <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div>
@@ -471,7 +471,7 @@ export default function AIAdvisor({
               </div>
             </div>
 
-            {/* Reasons */}
+          
             <ListSection
               title={t("whyAiRecommends")}
               items={
@@ -479,7 +479,7 @@ export default function AIAdvisor({
               }
             />
 
-            {/* Financial */}
+           
             <ListSection
               title={`💰 ${t("financialAdvice")}`}
               items={
@@ -487,7 +487,7 @@ export default function AIAdvisor({
               }
             />
 
-            {/* Market */}
+          
             <ListSection
               title={`📍 ${t("marketAdvice")}`}
               items={
@@ -495,7 +495,7 @@ export default function AIAdvisor({
               }
             />
 
-            {/* Risk */}
+           
             <ListSection
               title={`⚠️ ${t("riskMitigation")}`}
               items={
@@ -503,7 +503,7 @@ export default function AIAdvisor({
               }
             />
 
-            {/* Action Plan */}
+            
             <ListSection
               title={`🚀 ${t("recommendedActionPlan")}`}
               items={
@@ -511,7 +511,7 @@ export default function AIAdvisor({
               }
             />
 
-            {/* Alternatives */}
+            
             <ListSection
               title={`💡 ${t("alternativeBusinessIdeas")}`}
               items={
@@ -519,7 +519,7 @@ export default function AIAdvisor({
               }
             />
 
-            {/* SWOT */}
+            
             {advisory.swot && (
               <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
                 <h3 className="mb-5 text-xl font-bold text-gray-900">
@@ -570,7 +570,7 @@ export default function AIAdvisor({
               </div>
             )}
 
-            {/* Pricing */}
+          
             {advisory.pricingInsight && (
               <div className="rounded-2xl border border-purple-200 bg-purple-50 p-6">
                 <h3 className="mb-3 text-xl font-bold text-purple-900">
@@ -581,7 +581,7 @@ export default function AIAdvisor({
               </div>
             )}
 
-            {/* Business Plan */}
+         
             {advisory.businessPlan && (
               <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-6">
                 <h3 className="mb-5 text-xl font-bold text-indigo-900">
@@ -592,7 +592,7 @@ export default function AIAdvisor({
               </div>
             )}
 
-            {/* Disclaimer */}
+           
             <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
               <p className="text-xs leading-5 text-gray-500">
                 {t("aiDisclaimer")}

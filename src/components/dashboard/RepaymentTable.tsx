@@ -47,7 +47,7 @@ export default function RepaymentTable({
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      {/* Header & Moratorium Toggle */}
+     
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-600">
@@ -62,7 +62,7 @@ export default function RepaymentTable({
           </p>
         </div>
 
-        {/* Moratorium Rule Toggle */}
+       
         <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 p-1 text-xs">
           <button
             type="button"
@@ -89,7 +89,7 @@ export default function RepaymentTable({
         </div>
       </div>
 
-      {/* Moratorium Rule Explanation Banner */}
+      
       <div className="mt-4 rounded-xl border border-indigo-100 bg-indigo-50/60 p-4 text-xs leading-5 text-indigo-950">
         <div className="flex items-start gap-2.5">
           <Clock size={16} className="mt-0.5 shrink-0 text-indigo-600" />
@@ -112,7 +112,7 @@ export default function RepaymentTable({
         </div>
       </div>
 
-      {/* Summary KPI Cards */}
+      
       <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
           <p className="text-xs font-medium text-slate-500 uppercase">{t("sanctionedLoan")}</p>
@@ -149,7 +149,7 @@ export default function RepaymentTable({
         </div>
       </div>
 
-      {/* Amortization Schedule Table */}
+     
       <div className="mt-6 overflow-x-auto rounded-xl border border-slate-200">
         <table className="w-full text-left text-xs">
           <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-600">
@@ -208,7 +208,7 @@ export default function RepaymentTable({
         </table>
       </div>
 
-      {/* Expand / Collapse Control */}
+     
       {schedule.quarters.length > 6 && (
         <div className="mt-3 flex justify-center">
           <button

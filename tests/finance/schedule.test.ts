@@ -56,15 +56,15 @@ describe("Quarter-by-Quarter Amortization Schedule", () => {
       "FULLY_DEFERRED"
     );
 
-    // Interest-only preserves principal through moratorium
+   
     expect(interestOnly.quarters[1].closingPrincipal).toBe(principal);
     expect(interestOnly.quarters[0].totalInstallment).toBeGreaterThan(0);
 
-    // Fully deferred capitalizes interest into principal during moratorium
+   
     expect(fullyDeferred.quarters[1].closingPrincipal).toBeGreaterThan(principal);
     expect(fullyDeferred.quarters[0].totalInstallment).toBe(0);
 
-    // Fully deferred incurs slightly more total repayment because of capitalization
+   
     expect(fullyDeferred.totalRepayment).toBeGreaterThan(interestOnly.totalRepayment);
   });
 

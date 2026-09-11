@@ -15,7 +15,7 @@ export interface ViabilityInput {
 
 export interface FactorDetail {
   score: number;
-  weight: number; // percentage, e.g. 20
+  weight: number;
   rating: "POSITIVE" | "NEUTRAL" | "RISK";
   name: string;
   description: string;
@@ -55,7 +55,7 @@ export function calculateViabilityScore(
     monthlyEMI,
   } = input;
 
-  // 1. Market Saturation (Weight 20%)
+ 
   const saturationScore = clamp(marketDemand);
   const marketSaturation: FactorDetail = {
     name: "Market Saturation & Demand",
@@ -70,7 +70,7 @@ export function calculateViabilityScore(
         : "Market near saturation or demand is sluggish in this cluster.",
   };
 
-  // 2. Competitor Density (Weight 20%)
+  
   const densityScore = clamp(100 - competition);
   const competitorDensity: FactorDetail = {
     name: "Competitor Density",
@@ -85,7 +85,7 @@ export function calculateViabilityScore(
         : "High competitor cluster; requires distinct pricing/product offering.",
   };
 
-  // 3. Income-to-EMI Ratio / Budget Fit (Weight 25%)
+
   let incomeEmiScore = clamp(budgetFit);
   let incomeEmiDesc = "Capital budget aligns well with setup requirements.";
 
@@ -118,7 +118,7 @@ export function calculateViabilityScore(
     description: incomeEmiDesc,
   };
 
-  // 4. Seasonality Risk (Weight 15%)
+  
   const seasonScore = clamp(100 - seasonalRisk);
   const seasonalityRisk: FactorDetail = {
     name: "Seasonality & Cash Flow Stability",
@@ -133,7 +133,7 @@ export function calculateViabilityScore(
         : "Significant seasonal volatility; require off-season revenue diversification.",
   };
 
-  // 5. Founder Experience & Site Readiness (Weight 20%)
+  
   let expBase = 45;
   if (experienceYears >= 5) expBase = 90;
   else if (experienceYears >= 3) expBase = 80;
@@ -154,7 +154,7 @@ export function calculateViabilityScore(
         : "First-time entrepreneur; recommended to take RSETI skill orientation.",
   };
 
-  // Weighted aggregation: 20% + 20% + 25% + 15% + 20% = 100%
+  
   const compositeScore = clamp(
     marketSaturation.score * 0.20 +
       competitorDensity.score * 0.20 +

@@ -46,7 +46,7 @@ export default function LocationSelector({
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {/* Village */}
+        
         <div>
           <label
             htmlFor="village"
@@ -76,7 +76,7 @@ export default function LocationSelector({
           </div>
         </div>
 
-        {/* Block */}
+      
         <div>
           <label
             htmlFor="block"
@@ -99,7 +99,7 @@ export default function LocationSelector({
           />
         </div>
 
-        {/* District */}
+        
         <div>
           <label
             htmlFor="district"
@@ -122,7 +122,7 @@ export default function LocationSelector({
           />
         </div>
 
-        {/* State */}
+      
         <div>
           <label
             htmlFor="state"

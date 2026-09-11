@@ -35,7 +35,7 @@ function ReportContent() {
         return;
       }
 
-      // Fallback to URL params if sessionStorage is empty
+      
       const name = searchParams.get("business") || "Rural Micro Enterprise";
       const fallback: BusinessAssessment = {
         businessName: name,
@@ -122,7 +122,7 @@ function ReportContent() {
       <Navbar />
 
       <div className="mx-auto max-w-6xl px-4 py-8">
-        {/* Top bar */}
+     
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <Link
@@ -156,9 +156,9 @@ function ReportContent() {
           </div>
         </div>
 
-        {/* Report Cards */}
+       
         <div className="space-y-6">
-          {/* Header Overview Banner */}
+        
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex items-start gap-4">
               <div className="rounded-xl bg-indigo-50 p-3 text-indigo-600">
@@ -180,7 +180,7 @@ function ReportContent() {
             </div>
           </section>
 
-          {/* Profile & Viability Metrics */}
+         
           <div className="grid gap-6 md:grid-cols-3">
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
@@ -223,7 +223,7 @@ function ReportContent() {
             </div>
           </div>
 
-          {/* 5-Factor Breakdown Table */}
+         
           {result.viability.factors && (
             <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <h3 className="text-base font-bold text-slate-900 mb-4">
@@ -249,7 +249,7 @@ function ReportContent() {
             </section>
           )}
 
-          {/* Scheme Details */}
+          
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
               <Coins className="text-indigo-600" size={20} />
@@ -277,7 +277,7 @@ function ReportContent() {
             </div>
           </section>
 
-          {/* Repayment Schedule (First 8 quarters) */}
+          
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm overflow-hidden">
             <div className="flex items-center gap-2 mb-4">
               <Calendar className="text-indigo-600" size={20} />
@@ -311,7 +311,7 @@ function ReportContent() {
             </div>
           </section>
 
-          {/* Disclaimer */}
+          
           <section className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
             <h3 className="font-semibold text-amber-900 text-sm">
               {t("officialNoteTitle")}

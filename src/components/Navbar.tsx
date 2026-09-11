@@ -47,7 +47,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-        {/* Logo */}
+       
         <Link
           href="/"
           className="flex items-center gap-2"
@@ -68,7 +68,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop navigation */}
+       
         <nav className="hidden items-center gap-1 md:flex">
           {navigation.map((item) => {
             const Icon = item.icon;
@@ -95,12 +95,12 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Right */}
+       
         <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher />
         </div>
 
-        {/* Mobile menu button */}
+       
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
@@ -111,7 +111,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      
       {open && (
         <div className="border-t border-slate-200 bg-white px-4 py-4 md:hidden">
 

@@ -236,7 +236,7 @@ export default function BusinessReportPDF({
           </Text>
         </View>
 
-        {/* Enterprise Profile */}
+      
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>1. Enterprise Profile</Text>
           <View style={styles.gridTwo}>
@@ -258,7 +258,7 @@ export default function BusinessReportPDF({
           </View>
         </View>
 
-        {/* Viability & Pillars */}
+       
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>2. Viability Score & 5 Pillars</Text>
           <View style={styles.gridTwo}>
@@ -294,7 +294,7 @@ export default function BusinessReportPDF({
           )}
         </View>
 
-        {/* Financial Structure */}
+        
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>3. Financing Structure & Scheme Terms</Text>
           <View style={styles.gridTwo}>
@@ -324,7 +324,7 @@ export default function BusinessReportPDF({
           </View>
         </View>
 
-        {/* Repayment Schedule Table */}
+      
         {scheduleRows.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>4. Quarter-by-Quarter Amortization (Years 1-3)</Text>
@@ -349,7 +349,7 @@ export default function BusinessReportPDF({
           </View>
         )}
 
-        {/* AI Guidance */}
+      
         {aiAdvisory && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>5. Strategic Guidance & Recommended Actions</Text>
@@ -373,7 +373,7 @@ export default function BusinessReportPDF({
           </View>
         )}
 
-        {/* Disclaimer */}
+        
         <View style={styles.disclaimerBox}>
           <Text style={styles.disclaimerText}>
             Notice: Gram Udyam Advisor provides advisory and decision-support estimates. Actual bank interest rates,
@@ -381,7 +381,7 @@ export default function BusinessReportPDF({
           </Text>
         </View>
 
-        {/* Footer */}
+       
         <View style={styles.footer}>
           <Text>Gram Udyam Advisor — Rural Business Feasibility System</Text>
           <Text>Confidential — For Entrepreneur & Banking Guidance</Text>

@@ -7,10 +7,10 @@ interface NominatimResult {
   display_name: string;
 }
 
-// In-memory geocode cache as fast fallback & performance optimizer
+
 const memoryGeocodeCache = new Map<string, LocationCoordinates>();
 
-// State centroids across India for safe, graceful fallback estimates
+
 const STATE_CENTROIDS: Record<string, { lat: number; lon: number }> = {
   maharashtra: { lat: 19.7515, lon: 75.7139 },
   "madhya pradesh": { lat: 22.9734, lon: 78.6569 },
@@ -33,12 +33,12 @@ const STATE_CENTROIDS: Record<string, { lat: number; lon: number }> = {
   delhi: { lat: 28.7041, lon: 77.1025 },
 };
 
-// Rate limiter state: Nominatim requires <= 1 request per second
+
 let lastRequestTime = 0;
 async function enforceRateLimit(): Promise<void> {
   const now = Date.now();
   const timeSinceLast = now - lastRequestTime;
-  const minInterval = 1050; // 1.05s buffer
+  const minInterval = 1050; 
 
   if (timeSinceLast < minInterval) {
     const delay = minInterval - timeSinceLast;
@@ -98,15 +98,7 @@ function getPrecisionLabel(precision: GeocodePrecision): string {
   }
 }
 
-/**
- * Server-side Geocoding with Fallback Ladder:
- * 1. Village + Block + District + State
- * 2. Block + District + State
- * 3. District + State
- * 4. State Centroid / Regional Default
- *
- * Implements server-side rate limiting (1 req/sec) and multi-tier cache.
- */
+
 export async function geocodeLocation(
   village?: string,
   block?: string,
@@ -120,12 +112,12 @@ export async function geocodeLocation(
 
   const cacheKey = `${cleanVillage.toLowerCase()}|${cleanBlock.toLowerCase()}|${cleanDistrict.toLowerCase()}|${cleanState.toLowerCase()}`;
 
-  // 1. Check in-memory cache
+ 
   if (memoryGeocodeCache.has(cacheKey)) {
     return memoryGeocodeCache.get(cacheKey)!;
   }
 
-  // 2. Check Supabase geocode_cache table if configured
+
   try {
     const supabase = getSupabaseClient();
     if (supabase) {
@@ -148,10 +140,10 @@ export async function geocodeLocation(
       }
     }
   } catch {
-    // Non-blocking if table is not yet migrated
+  
   }
 
-  // 3. Fallback Ladder Steps
+ 
   const ladderSteps: Array<{
     query: string;
     precision: GeocodePrecision;
@@ -198,10 +190,10 @@ export async function geocodeLocation(
         precisionLabel: getPrecisionLabel(step.precision),
       };
 
-      // Save to memory cache
+      
       memoryGeocodeCache.set(cacheKey, coords);
 
-      // Attempt to save to Supabase geocode_cache asynchronously
+     
       try {
         const supabase = getSupabaseClient();
         if (supabase) {
@@ -226,7 +218,7 @@ export async function geocodeLocation(
     }
   }
 
-  // 4. Graceful Regional Fallback if all queries return 0 results
+ 
   const stateKey = cleanState.toLowerCase();
   const centroid = STATE_CENTROIDS[stateKey] || { lat: 20.5937, lon: 78.9629 }; // India center
 

@@ -27,7 +27,7 @@ export interface SchemeResult {
 }
 
 export function routeScheme(projectCost: number): SchemeResult {
-  // Invalid project cost
+ 
   if (!Number.isFinite(projectCost) || projectCost <= 0) {
     return {
       scheme: "NOT_ELIGIBLE",
@@ -53,7 +53,7 @@ export function routeScheme(projectCost: number): SchemeResult {
     };
   }
 
-  // Case A: Project cost too small to be practically viable for institutional bank schemes (< ₹10,000)
+ 
   if (projectCost < 10000) {
     return {
       scheme: "NOT_ELIGIBLE",
@@ -90,7 +90,7 @@ export function routeScheme(projectCost: number): SchemeResult {
     };
   }
 
-  // Case B: Micro Finance Scheme (₹10,000 to ₹1,40,000)
+  
   if (projectCost <= 140000) {
     return {
       scheme: "MICRO_FINANCE",
@@ -111,7 +111,7 @@ export function routeScheme(projectCost: number): SchemeResult {
     };
   }
 
-  // Case C: Term Loan Scheme (₹1,40,000 to ₹50,00,000)
+  
   if (projectCost <= 5000000) {
     return {
       scheme: "TERM_LOAN",
@@ -132,7 +132,7 @@ export function routeScheme(projectCost: number): SchemeResult {
     };
   }
 
-  // Case D: Project cost exceeds maximum scheme ceiling (> ₹50,00,000)
+ 
   return {
     scheme: "NOT_ELIGIBLE",
     name: "Project Exceeds Scheme Ceiling",

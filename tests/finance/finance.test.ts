@@ -51,7 +51,7 @@ describe("Complete Financial Analysis", () => {
 
   test("project above ₹50 lakh receives guidance", () => {
 
-    // ₹6 lakh margin → ₹60 lakh project
+    
     const result =
       analyzeFinance(600000);
 

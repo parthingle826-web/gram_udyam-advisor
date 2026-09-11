@@ -23,9 +23,7 @@ export interface BusinessAnalysis {
 export function analyzeBusiness(
   assessment: BusinessAssessment
 ): BusinessAnalysis {
-  // -----------------------------------------
-  // 1. Calculate business viability
-  // -----------------------------------------
+
 
   const viability = calculateViabilityScore({
     marketDemand: assessment.marketDemand,
@@ -36,9 +34,7 @@ export function analyzeBusiness(
     profitPotential: assessment.profitPotential,
   });
 
-  // -----------------------------------------
-  // 2. Calculate financial structure
-  // -----------------------------------------
+
 
  const finance = analyzeFinance(
   assessment.marginCapital,
@@ -46,9 +42,7 @@ export function analyzeBusiness(
   assessment.operatingExpenses ?? 0
 );
 
-  // -----------------------------------------
-  // 3. Business decision
-  // -----------------------------------------
+  
 
   let decision:
     | "RECOMMENDED"
@@ -78,9 +72,7 @@ if (
   decision = "NOT_RECOMMENDED";
 }
 
-  // -----------------------------------------
-  // 4. Strengths
-  // -----------------------------------------
+
 
   const strengths: string[] = [];
 
@@ -126,9 +118,7 @@ if (
     );
   }
 
-  // -----------------------------------------
-  // 5. Risks
-  // -----------------------------------------
+  
 
   const risks: string[] = [];
 
@@ -171,9 +161,7 @@ if (
     );
   }
 
-  // -----------------------------------------
-  // 6. Opportunities
-  // -----------------------------------------
+ 
 
   const opportunities: string[] = [];
 
@@ -207,9 +195,6 @@ if (
     );
   }
 
-  // -----------------------------------------
-  // 7. Next steps
-  // -----------------------------------------
 
   const nextSteps: string[] = [];
 

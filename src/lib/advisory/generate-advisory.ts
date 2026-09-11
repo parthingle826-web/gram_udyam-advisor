@@ -19,10 +19,7 @@ export function generateAdvisory(
     | "REVIEW"
     | "AVOID";
 
-  /*
-   * Overall recommendation
-   */
-
+ 
   if (
     input.viabilityScore >= 75 &&
     input.schemeSuitable
@@ -42,9 +39,7 @@ export function generateAdvisory(
     recommendation = "AVOID";
   }
 
-  /*
-   * Viability reasons
-   */
+ 
 
   if (input.viabilityScore >= 75) {
     keyReasons.push(
@@ -60,9 +55,7 @@ export function generateAdvisory(
     );
   }
 
-  /*
-   * Competition
-   */
+  
 
   if (input.competitionLevel === "LOW") {
     keyReasons.push(
@@ -98,10 +91,7 @@ export function generateAdvisory(
     );
   }
 
-  /*
-   * Financial advice
-   */
-
+ 
   if (input.schemeSuitable) {
     financialAdvice.push(
       `Estimated project cost: ₹${formatNumber(
@@ -129,10 +119,7 @@ export function generateAdvisory(
       "Keep sufficient working capital for the first few months of operations."
     );
   } else {
-    /*
-     * IMPORTANT:
-     * Don't simply reject the entrepreneur.
-     */
+    
 
     financialAdvice.push(
       "The current project size does not match the configured financing schemes."
@@ -159,9 +146,7 @@ export function generateAdvisory(
     );
   }
 
-  /*
-   * Market opportunities
-   */
+  
 
   for (const opportunity of input.marketOpportunities.slice(
     0,
@@ -170,25 +155,19 @@ export function generateAdvisory(
     marketAdvice.push(opportunity);
   }
 
-  /*
-   * Market risks
-   */
+ 
 
   for (const risk of input.marketRisks.slice(0, 4)) {
     riskMitigation.push(risk);
   }
 
-  /*
-   * Business risks
-   */
+ 
 
   for (const risk of input.risks.slice(0, 3)) {
     riskMitigation.push(risk);
   }
 
-  /*
-   * Action plan
-   */
+  
 
   actionPlan.push(
     "Validate the business idea with potential local customers."
@@ -210,9 +189,7 @@ export function generateAdvisory(
     "Verify final eligibility and documentation requirements with the relevant authority."
   );
 
-  /*
-   * Alternative businesses
-   */
+ 
 
   if (
     input.competitionLevel === "HIGH" ||
@@ -231,9 +208,7 @@ export function generateAdvisory(
     );
   }
 
-  /*
-   * Confidence
-   */
+ 
 
   const confidence = Math.min(
     95,

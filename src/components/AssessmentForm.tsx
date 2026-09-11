@@ -289,7 +289,7 @@ export default function AssessmentForm({
       onSubmit={handleSubmit}
       className="space-y-8"
     >
-      {/* Basic information */}
+    
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6">
           <h2 className="text-xl font-bold text-slate-900">
@@ -346,7 +346,7 @@ export default function AssessmentForm({
         </div>
       </section>
 
-      {/* Finance */}
+     
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6 flex items-start gap-3">
           <div className="rounded-xl bg-slate-100 p-3">
@@ -371,7 +371,7 @@ export default function AssessmentForm({
         />
       </section>
 
-      {/* Market factors */}
+      
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6">
           <h2 className="text-xl font-bold text-slate-900">
@@ -434,7 +434,7 @@ export default function AssessmentForm({
         </div>
       </section>
 
-      {/* Sustainability */}
+      
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6">
           <h2 className="text-xl font-bold text-slate-900">
@@ -463,7 +463,7 @@ export default function AssessmentForm({
         </div>
       </section>
 
-      {/* Founder Readiness & Assets */}
+    
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6">
           <h2 className="text-xl font-bold text-slate-900">
@@ -523,7 +523,7 @@ export default function AssessmentForm({
         </div>
       </section>
 
-      {/* Submit */}
+   
       <section>
         {errors.submit && (
           <div className="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">

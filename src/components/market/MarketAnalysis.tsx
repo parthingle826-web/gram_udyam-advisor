@@ -6,7 +6,7 @@ import type { MapPlace } from "./MarketMap";
 import { RefreshCw, Layers } from "lucide-react";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
 
-// Lazy-load MarketMap with ssr: false so SSR does not evaluate window/Leaflet
+
 const MarketMap = dynamic(() => import("./MarketMap"), {
   ssr: false,
   loading: () => (
@@ -105,7 +105,7 @@ export default function MarketAnalysis({
     }
   }
 
-  // Auto-analyze on initial mount if location props exist
+ 
   useEffect(() => {
     if (district || state || village || block) {
       analyze();
@@ -114,7 +114,7 @@ export default function MarketAnalysis({
 
   return (
     <div className="space-y-6">
-      {/* Control Card */}
+      
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -169,7 +169,7 @@ export default function MarketAnalysis({
         )}
       </section>
 
-      {/* Embedded Leaflet Map */}
+      
       {location && (
         <section>
           <MarketMap
@@ -182,7 +182,7 @@ export default function MarketAnalysis({
         </section>
       )}
 
-      {/* Market Metrics & Findings */}
+     
       {result && (
         <div className="space-y-6">
           <div className="grid gap-4 sm:grid-cols-3">
@@ -224,7 +224,7 @@ export default function MarketAnalysis({
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            {/* Opportunities */}
+           
             <div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-6 shadow-sm">
               <h3 className="text-lg font-bold text-emerald-950">
                 {t("localMarketOpportunities")}
@@ -239,7 +239,7 @@ export default function MarketAnalysis({
               </ul>
             </div>
 
-            {/* Risks */}
+           
             <div className="rounded-2xl border border-amber-100 bg-amber-50/50 p-6 shadow-sm">
               <h3 className="text-lg font-bold text-amber-950">
                 {t("marketRiskAssessment")}

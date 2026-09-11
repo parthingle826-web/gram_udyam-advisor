@@ -2,7 +2,7 @@ export type Language = "en" | "hi" | "mr";
 
 export const translations = {
   en: {
-    // Navbar
+    
     home: "Home",
     assessment: "Assessment",
     dashboard: "Dashboard",
@@ -12,7 +12,7 @@ export const translations = {
     report: "Report",
     print: "Print",
 
-    // Common
+   
     loading: "Loading...",
     submit: "Submit",
     continue: "Continue",
@@ -27,13 +27,13 @@ export const translations = {
     downloadReport: "Download Report",
     retry: "Retry",
 
-    // Languages
+  
     english: "English",
     hindi: "हिंदी",
     marathi: "मराठी",
     language: "Language",
 
-    // Hero & Landing
+   
     heroBadge: "AI for Sustainable Rural Entrepreneurship",
     heroTitle: "AI-Powered Business Advisor for Rural Entrepreneurs",
     heroSubtitle:
@@ -74,7 +74,7 @@ export const translations = {
       "Understand your market, financing options and business risks before investing your capital.",
     footerTagline: "AI-powered sustainable rural entrepreneurship",
 
-    // Auth / Login
+   
     welcomeBack: "Welcome Back",
     loginSubtitle: "Login using your mobile number",
     mobileNumber: "Mobile Number",
@@ -84,7 +84,7 @@ export const translations = {
       "Your mobile number will be used for secure authentication.",
     backToHome: "Back to Home",
 
-    // Assessment & Intake
+    
     assessmentStepBadge: "Step 1 of 3: Business & Location Intake",
     assessmentPageTitle: "Gram Udyam Business Assessment",
     assessmentPageSubtitle:
@@ -157,7 +157,7 @@ export const translations = {
     formDisclaimer:
       "Your results are estimates for decision support and should be verified before making financial commitments.",
 
-    // Dashboard & Viability
+   
     enterpriseAssessment: "Enterprise Assessment",
     viabilityScore: "Viability Score",
     highViability: "High Viability",
@@ -194,7 +194,7 @@ export const translations = {
     competitionLevelLabel: "Competition Level",
     marketDensity: "Market Density",
 
-    // Finance Metrics
+  
     projectCost: "Project Cost",
     loanAmount: "Loan Amount",
     marginAmount: "Margin Amount",
@@ -221,13 +221,13 @@ export const translations = {
     financiallyWeak:
       "The business may face financial pressure. Consider reducing costs, increasing revenue potential or starting with a smaller project.",
 
-    // Schemes
+   
     recommendedScheme: "Recommended Scheme",
     microFinance: "Micro Finance Scheme",
     termLoan: "Term Loan Scheme",
     noSuitableScheme: "No Suitable Scheme",
 
-    // No-Fit Guidance
+   
     noFitTitle: "Scheme Eligibility: Alternative Route Recommended",
     fallbackEngineBadge: "Actionable Fallback Engine",
     copyAdvice: "Copy Advice",
@@ -237,7 +237,6 @@ export const translations = {
     practicalRecommendations: "Practical Recommendations",
     alternativePathwaysTitle: "Concrete Alternative Pathways to Explore",
 
-    // Repayment Table
     amortizationScheduleTitle: "Deterministic Amortization Schedule",
     quarterlyScheduleHeading: "Quarter-by-Quarter Repayment Schedule",
     interestOnlyBtn: "Interest-Only Moratorium",
@@ -262,7 +261,7 @@ export const translations = {
     repaymentFootnote:
       "* Estimates generated deterministically according to official scheme guidelines. Moratorium status assumes loan sanction on Day 1. Final repayment calendar will be issued by the financing bank upon disbursal.",
 
-    // Market & Map
+   
     marketAnalysis: "Market Analysis",
     loadingMapView: "Loading hyper-local map view...",
     loadingMap: "Loading hyper-local map...",
@@ -297,7 +296,7 @@ export const translations = {
     marketOpportunity: "Market Opportunity",
     localRisks: "Local Risks",
 
-    // AI Advisor & Strategy
+    
     aiAdvisorSubtitle:
       "Get an AI-powered assessment using your financial structure, business viability and hyper-local market intelligence.",
     generateAiAdvice: "Generate AI Advice",
@@ -342,7 +341,7 @@ export const translations = {
     review: "Review",
     avoid: "Avoid",
 
-    // SWOT
+  
     swotAnalysis: "SWOT Analysis",
     strengths: "Strengths",
     weaknesses: "Weaknesses",
@@ -351,7 +350,7 @@ export const translations = {
     riskAnalysis: "Risk Analysis",
     opportunities: "Opportunities",
 
-    // Report & PDF
+  
     comprehensiveAppraisal: "Comprehensive Business Appraisal",
     verifiedAnalysis: "Verified Analysis",
     reportSummaryIntro:
@@ -368,7 +367,7 @@ export const translations = {
     generatingPdf: "Generating PDF...",
     downloadOfficialPdf: "Download Official PDF",
 
-    // System Messages
+   
     analysisComplete: "Analysis completed successfully.",
     somethingWentWrong: "Something went wrong. Please try again.",
     enterValidValues: "Please enter valid values.",
@@ -377,7 +376,7 @@ export const translations = {
   },
 
   hi: {
-    // Navbar
+  
     home: "होम",
     assessment: "मूल्यांकन",
     dashboard: "डैशबोर्ड",
@@ -387,7 +386,7 @@ export const translations = {
     report: "रिपोर्ट",
     print: "प्रिंट करें",
 
-    // Common
+  
     loading: "लोड हो रहा है...",
     submit: "सबमिट करें",
     continue: "जारी रखें",
@@ -402,13 +401,13 @@ export const translations = {
     downloadReport: "रिपोर्ट डाउनलोड करें",
     retry: "पुनः प्रयास करें",
 
-    // Languages
+   
     english: "English",
     hindi: "हिंदी",
     marathi: "मराठी",
     language: "भाषा",
 
-    // Hero & Landing
+   
     heroBadge: "टिकाऊ ग्रामीण उद्यमिता के लिए AI",
     heroTitle: "ग्रामीण उद्यमियों के लिए AI आधारित व्यवसाय सलाहकार",
     heroSubtitle:
@@ -449,7 +448,7 @@ export const translations = {
       "अपनी पूंजी निवेश करने से पहले अपने बाजार, वित्तपोषण विकल्पों और व्यावसायिक जोखिमों को समझें।",
     footerTagline: "AI-संचालित टिकाऊ ग्रामीण उद्यमिता",
 
-    // Auth / Login
+   
     welcomeBack: "वापसी पर स्वागत है",
     loginSubtitle: "अपने मोबाइल नंबर से लॉगिन करें",
     mobileNumber: "मोबाइल नंबर",
@@ -459,7 +458,7 @@ export const translations = {
       "आपके मोबाइल नंबर का उपयोग सुरक्षित प्रमाणीकरण के लिए किया जाएगा।",
     backToHome: "होम पर वापस जाएं",
 
-    // Assessment & Intake
+    
     assessmentStepBadge: "चरण 1 का 3: व्यवसाय और स्थान विवरण",
     assessmentPageTitle: "ग्राम उद्यम व्यवसाय मूल्यांकन",
     assessmentPageSubtitle:
@@ -532,7 +531,7 @@ export const translations = {
     formDisclaimer:
       "आपके परिणाम निर्णय लेने में सहायता के लिए अनुमान हैं और वित्तीय प्रतिबद्धता से पहले सत्यापित किए जाने चाहिए।",
 
-    // Dashboard & Viability
+   
     enterpriseAssessment: "उद्यम मूल्यांकन",
     viabilityScore: "व्यवहार्यता स्कोर",
     highViability: "उच्च व्यवहार्यता",
@@ -569,7 +568,7 @@ export const translations = {
     competitionLevelLabel: "प्रतिस्पर्धा स्तर",
     marketDensity: "बाजार घनत्व",
 
-    // Finance Metrics
+   
     projectCost: "परियोजना लागत",
     loanAmount: "ऋण राशि",
     marginAmount: "मार्जिन राशि",
@@ -596,13 +595,13 @@ export const translations = {
     financiallyWeak:
       "व्यवसाय को वित्तीय दबाव का सामना करना पड़ सकता है। लागत कम करने, आय बढ़ाने या छोटे स्तर से शुरुआत करने पर विचार करें।",
 
-    // Schemes
+   
     recommendedScheme: "अनुशंसित योजना",
     microFinance: "माइक्रो फाइनेंस योजना",
     termLoan: "टर्म लोन योजना",
     noSuitableScheme: "कोई उपयुक्त योजना नहीं",
 
-    // No-Fit Guidance
+   
     noFitTitle: "योजना पात्रता: वैकल्पिक मार्ग अनुशंसित",
     fallbackEngineBadge: "व्यावहारिक बैकअप इंजन",
     copyAdvice: "सलाह कॉपी करें",
@@ -612,7 +611,7 @@ export const translations = {
     practicalRecommendations: "व्यावहारिक सिफारिशें",
     alternativePathwaysTitle: "अन्वेषण के लिए ठोस वैकल्पिक मार्ग",
 
-    // Repayment Table
+    
     amortizationScheduleTitle: "निर्धारित परिशोधन अनुसूची",
     quarterlyScheduleHeading: "तिमाही-दर-तिमाही पुनर्भुगतान अनुसूची",
     interestOnlyBtn: "केवल ब्याज स्थगन",
@@ -637,7 +636,7 @@ export const translations = {
     repaymentFootnote:
       "* आधिकारिक योजना दिशानिर्देशों के अनुसार अनुमान तैयार किए गए हैं। स्थगन स्थिति पहले दिन ऋण स्वीकृति मानती है। वितरण पर बैंक द्वारा अंतिम पुनर्भुगतान कैलेंडर जारी किया जाएगा।",
 
-    // Market & Map
+    
     marketAnalysis: "बाजार विश्लेषण",
     loadingMapView: "हाइपर-लोकल मैप दृश्य लोड हो रहा है...",
     loadingMap: "नक्शा लोड हो रहा है...",
@@ -672,7 +671,7 @@ export const translations = {
     marketOpportunity: "बाजार अवसर",
     localRisks: "स्थानीय जोखिम",
 
-    // AI Advisor & Strategy
+   
     aiAdvisorSubtitle:
       "अपनी वित्तीय संरचना, व्यावसायिक व्यवहार्यता और स्थानीय बाजार जानकारी का उपयोग करके AI मूल्यांकन प्राप्त करें।",
     generateAiAdvice: "AI सलाह तैयार करें",
@@ -717,7 +716,7 @@ export const translations = {
     review: "समीक्षा करें",
     avoid: "बचें",
 
-    // SWOT
+   
     swotAnalysis: "SWOT विश्लेषण",
     strengths: "ताकत",
     weaknesses: "कमजोरियाँ",
@@ -726,7 +725,7 @@ export const translations = {
     riskAnalysis: "जोखिम विश्लेषण",
     opportunities: "अवसर",
 
-    // Report & PDF
+    
     comprehensiveAppraisal: "व्यापक व्यवसाय मूल्यांकन",
     verifiedAnalysis: "सत्यापित विश्लेषण",
     reportSummaryIntro:
@@ -743,7 +742,7 @@ export const translations = {
     generatingPdf: "PDF बन रहा है...",
     downloadOfficialPdf: "आधिकारिक PDF डाउनलोड करें",
 
-    // System Messages
+    
     analysisComplete: "विश्लेषण सफलतापूर्वक पूरा हुआ।",
     somethingWentWrong: "कुछ गलत हुआ। कृपया पुनः प्रयास करें।",
     enterValidValues: "कृपया सही मान दर्ज करें।",
@@ -752,7 +751,7 @@ export const translations = {
   },
 
   mr: {
-    // Navbar
+    
     home: "मुख्यपृष्ठ",
     assessment: "मूल्यांकन",
     dashboard: "डॅशबोर्ड",
@@ -762,7 +761,7 @@ export const translations = {
     report: "अहवाल",
     print: "प्रिंट करा",
 
-    // Common
+  
     loading: "लोड होत आहे...",
     submit: "सबमिट करा",
     continue: "पुढे जा",
@@ -777,13 +776,13 @@ export const translations = {
     downloadReport: "अहवाल डाउनलोड करा",
     retry: "पुन्हा प्रयत्न करा",
 
-    // Languages
+  
     english: "English",
     hindi: "हिंदी",
     marathi: "मराठी",
     language: "भाषा",
 
-    // Hero & Landing
+  
     heroBadge: "शाश्वत ग्रामीण उद्योजकतेसाठी AI",
     heroTitle: "ग्रामीण उद्योजकांसाठी AI आधारित व्यवसाय सल्लागार",
     heroSubtitle:
@@ -824,7 +823,7 @@ export const translations = {
       "आपले भांडवल गुंतवण्यापूर्वी आपली बाजारपेठ, वित्तपुरवठा पर्याय आणि व्यावसायिक जोखीम समजून घ्या.",
     footerTagline: "AI-सक्षम शाश्वत ग्रामीण उद्योजकता",
 
-    // Auth / Login
+  
     welcomeBack: "पुन्हा स्वागत आहे",
     loginSubtitle: "तुमच्या मोबाईल नंबरने लॉगिन करा",
     mobileNumber: "मोबाईल नंबर",
@@ -834,7 +833,7 @@ export const translations = {
       "तुमचा मोबाईल नंबर सुरक्षित प्रमाणीकरणासाठी वापरला जाईल.",
     backToHome: "मुख्यपृष्ठावर परत जा",
 
-    // Assessment & Intake
+  
     assessmentStepBadge: "टप्पा 1 पैकी 3: व्यवसाय आणि स्थान तपशील",
     assessmentPageTitle: "ग्राम उद्यम व्यवसाय मूल्यांकन",
     assessmentPageSubtitle:
@@ -907,7 +906,7 @@ export const translations = {
     formDisclaimer:
       "तुमचे निकाल निर्णय घेण्यासाठी सहाय्यक अंदाज आहेत आणि आर्थिक निर्णय घेण्यापूर्वी त्यांची पडताळणी करावी.",
 
-    // Dashboard & Viability
+  
     enterpriseAssessment: "उद्यम मूल्यांकन",
     viabilityScore: "व्यवहार्यता गुण",
     highViability: "उच्च व्यवहार्यता",
@@ -944,7 +943,7 @@ export const translations = {
     competitionLevelLabel: "स्पर्धा पातळी",
     marketDensity: "बाजारपेठ घनता",
 
-    // Finance Metrics
+  
     projectCost: "प्रकल्प खर्च",
     loanAmount: "कर्जाची रक्कम",
     marginAmount: "मार्जिन रक्कम",
@@ -971,13 +970,13 @@ export const translations = {
     financiallyWeak:
       "व्यवसायावर आर्थिक दबाव येऊ शकतो. खर्च कमी करणे, उत्पन्न वाढवणे किंवा छोट्या स्तरावर सुरुवात करण्याचा विचार करा.",
 
-    // Schemes
+  
     recommendedScheme: "शिफारस केलेली योजना",
     microFinance: "मायक्रो फायनान्स योजना",
     termLoan: "टर्म लोन योजना",
     noSuitableScheme: "योग्य योजना उपलब्ध नाही",
 
-    // No-Fit Guidance
+  
     noFitTitle: "योजना पात्रता: पर्यायी मार्ग शिफारस",
     fallbackEngineBadge: "कार्यान्वित बॅकअप इंजिन",
     copyAdvice: "सल्ला कॉपी करा",
@@ -987,7 +986,7 @@ export const translations = {
     practicalRecommendations: "व्यावहारिक शिफारशी",
     alternativePathwaysTitle: "शोधण्यासाठी ठोस पर्यायी मार्ग",
 
-    // Repayment Table
+
     amortizationScheduleTitle: "निश्चित परतफेड वेळापत्रक",
     quarterlyScheduleHeading: "तिमाहीनुसार परतफेड वेळापत्रक",
     interestOnlyBtn: "केवळ व्याज स्थगिती",
@@ -1012,7 +1011,7 @@ export const translations = {
     repaymentFootnote:
       "* अधिकृत योजना मार्गदर्शक तत्त्वांच्या आधारे अंदाज तयार केले आहेत. स्थगिती पहिल्या दिवशी कर्ज मंजुरी गृहीत धरते. अंतिम परतफेड वेळापत्रक बँकेद्वारे जारी केले जाईल.",
 
-    // Market & Map
+  
     marketAnalysis: "बाजारपेठ विश्लेषण",
     loadingMapView: "स्थानिक नकाशा लोड होत आहे...",
     loadingMap: "नकाशा लोड होत आहे...",
@@ -1047,7 +1046,7 @@ export const translations = {
     marketOpportunity: "बाजारपेठेतील संधी",
     localRisks: "स्थानिक जोखीम",
 
-    // AI Advisor & Strategy
+  
     aiAdvisorSubtitle:
       "तुमची आर्थिक रचना, व्यावसायिक व्यवहार्यता आणि स्थानिक बाजारपेठ माहिती वापरून AI मूल्यांकन मिळवा.",
     generateAiAdvice: "AI सल्ला मिळवा",
@@ -1092,7 +1091,7 @@ export const translations = {
     review: "पुनरावलोकन करा",
     avoid: "टाळा",
 
-    // SWOT
+  
     swotAnalysis: "SWOT विश्लेषण",
     strengths: "बलस्थाने",
     weaknesses: "कमकुवत बाजू",
@@ -1101,7 +1100,7 @@ export const translations = {
     riskAnalysis: "जोखीम विश्लेषण",
     opportunities: "संधी",
 
-    // Report & PDF
+  
     comprehensiveAppraisal: "सर्वसमावेशक व्यवसाय मूल्यांकन",
     verifiedAnalysis: "पडताळणी केलेले विश्लेषण",
     reportSummaryIntro:
@@ -1118,7 +1117,7 @@ export const translations = {
     generatingPdf: "PDF जनरेट होत आहे...",
     downloadOfficialPdf: "अधिकृत PDF डाउनलोड करा",
 
-    // System Messages
+ 
     analysisComplete: "विश्लेषण यशस्वीरीत्या पूर्ण झाले.",
     somethingWentWrong: "काहीतरी चूक झाली. कृपया पुन्हा प्रयत्न करा.",
     enterValidValues: "कृपया योग्य मूल्ये भरा.",

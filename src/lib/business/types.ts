@@ -9,7 +9,6 @@ export interface BusinessAssessment {
 
   marginCapital: number;
 
-  // Market viability
   marketDemand: number;
   competition: number;
   budgetFit: number;
@@ -17,7 +16,7 @@ export interface BusinessAssessment {
   seasonalRisk: number;
   profitPotential: number;
 
-  // Financial sustainability
+
 monthlyRevenue?: number;
 operatingExpenses?: number;
 }

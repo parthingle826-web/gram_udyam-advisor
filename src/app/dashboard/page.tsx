@@ -62,11 +62,6 @@ function DashboardContent() {
         return;
       }
 
-      /*
-       * Backward compatibility:
-       * If the assessment was opened using query parameters,
-       * continue supporting that flow.
-       */
       const params = new URLSearchParams(
         window.location.search
       );
@@ -225,7 +220,7 @@ function DashboardContent() {
     <main className="min-h-screen bg-slate-50">
       <Navbar />
 
-      {/* Header */}
+     
       <section className="border-b bg-white">
         <div className="mx-auto max-w-7xl px-6 py-8">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
@@ -275,9 +270,9 @@ function DashboardContent() {
         </div>
       </section>
 
-      {/* Main */}
+     
       <div className="mx-auto max-w-7xl space-y-8 px-6 py-8">
-        {/* Recommendation */}
+      
         <section className="rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
           <p className="text-sm font-medium text-gray-500">
             {t("overallRecommendation")}
@@ -292,7 +287,7 @@ function DashboardContent() {
           </p>
         </section>
 
-        {/* Metrics */}
+       
         <div className="grid gap-6 md:grid-cols-4">
           <MetricCard
             title={t("viabilityScore")}
@@ -325,7 +320,7 @@ function DashboardContent() {
           />
         </div>
 
-        {/* Viability */}
+      
         <ViabilityScore
           score={result.viability.score}
           rating={result.viability.rating}
@@ -333,23 +328,23 @@ function DashboardContent() {
           factors={result.viability.factors}
         />
 
-        {/* Business Summary */}
+        
         <BusinessSummary
           business={assessment}
         />
 
-        {/* Loan Summary */}
+        
         <LoanSummary
           finance={result.finance}
         />
 
-        {/* Scheme */}
+      
         <SchemeCard
           scheme={result.finance.scheme}
           projectCost={result.finance.projectCost}
         />
 
-        {/* AI Advisor */}
+       
         <AIAdvisor
           assessment={assessment}
           result={result}
@@ -357,7 +352,7 @@ function DashboardContent() {
           language={language}
         />
 
-        {/* Business Plan */}
+       
         <BusinessPlan
           businessName={assessment.businessName}
           category={assessment.category}
@@ -375,7 +370,7 @@ function DashboardContent() {
           nextSteps={result.nextSteps}
         />
 
-        {/* Repayment */}
+       
         {result.finance.scheme.suitable && (
           <section>
             <h2 className="mb-4 text-xl font-bold text-gray-900">
@@ -424,7 +419,7 @@ function DashboardContent() {
           />
         </section>
 
-        {/* Zero-Data Fallback Guidance (Module 3) */}
+        
         {market && market.totalBusinesses === 0 && (
           <NoFitGuidance
             title="Market Intelligence: Zero Commercial Listings Detected"
@@ -451,7 +446,7 @@ function DashboardContent() {
           />
         )}
 
-        {/* Market Summary */}
+       
         {market && (
           <section className="grid gap-6 md:grid-cols-3">
             <MetricCard
@@ -476,7 +471,7 @@ function DashboardContent() {
           </section>
         )}
 
-        {/* SWOT */}
+       
         <SWOTCard
           strengths={result.strengths}
           weaknesses={result.risks}
@@ -498,7 +493,7 @@ function DashboardContent() {
           }
         />
 
-        {/* Opportunities / Risks */}
+      
         <div className="grid gap-6 lg:grid-cols-2">
           <OpportunityCard
             opportunities={
@@ -526,7 +521,7 @@ function DashboardContent() {
           />
         </div>
 
-        {/* Next Steps */}
+        
         <section className="rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
           <h2 className="text-xl font-bold text-gray-900">
             {t("recommendedNextSteps")}
@@ -552,7 +547,7 @@ function DashboardContent() {
           </div>
         </section>
 
-        {/* AI Advisory */}
+        
         <AdvisoryPanel
           advisory={advisory}
           viabilityScore={

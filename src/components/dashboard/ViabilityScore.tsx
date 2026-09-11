@@ -67,7 +67,7 @@ export default function ViabilityScore({
 
   return (
     <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-      {/* Overall Score Header */}
+      
       <div className="flex items-center justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
@@ -92,7 +92,7 @@ export default function ViabilityScore({
         </span>
       </div>
 
-      {/* Main Bar */}
+      
       <div className="mt-4 h-3 overflow-hidden rounded-full bg-gray-100">
         <div
           className={`h-full rounded-full transition-all duration-700 ${config.bar}`}
@@ -119,7 +119,7 @@ export default function ViabilityScore({
         </p>
       )}
 
-      {/* Factor Breakdown (5 Pillars) */}
+      
       {factorItems.length > 0 && (
         <div className="mt-8 border-t border-gray-100 pt-6">
           <div className="flex items-center justify-between mb-4">
@@ -189,7 +189,7 @@ export default function ViabilityScore({
                     </div>
                   </div>
 
-                  {/* Factor Score Bar */}
+                  
                   <div className="mt-3 h-2 overflow-hidden rounded-full bg-gray-200">
                     <div
                       className={`h-full rounded-full transition-all duration-500 ${ratingStyle.barColor}`}
@@ -197,7 +197,7 @@ export default function ViabilityScore({
                     />
                   </div>
 
-                  {/* Factor Description */}
+                  
                   <p className="mt-2 text-xs leading-relaxed text-gray-600">
                     {factor.description}
                   </p>

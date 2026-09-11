@@ -19,7 +19,6 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <Navbar />
 
-      {/* HERO */}
       <section className="px-6 py-24">
         <div className="mx-auto max-w-5xl text-center">
           <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700">
@@ -47,7 +46,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURES */}
+      
       <section className="bg-slate-50 px-6 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 text-center">
@@ -99,7 +98,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WORKFLOW */}
+     
       <section className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-center text-3xl font-bold text-slate-900">
@@ -134,7 +133,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+     
       <section className="bg-emerald-600 px-6 py-20 text-center text-white">
         <h2 className="text-3xl font-bold">
           {t("ctaTitle")}
@@ -152,7 +151,7 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* FOOTER */}
+
       <footer className="border-t border-slate-200 px-6 py-8 text-center text-sm text-slate-500">
         <p className="font-semibold text-slate-700">Gram Udyam Advisor</p>
         <p className="mt-1">

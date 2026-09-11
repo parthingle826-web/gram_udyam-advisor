@@ -52,9 +52,7 @@ export function calculateWeightedViability(
   const normalized =
     normalizeViabilityFactors(factors);
 
-  /*
-   * Higher competition and seasonal risk reduce viability.
-   */
+  
   const competitionScore =
     100 - normalized.competition;
 

@@ -54,12 +54,7 @@ export function calculateMoratorium(
   const interestDuringMoratorium =
     monthlyInterest * moratoriumMonths;
 
-  /*
-   * This is a planning estimate.
-   *
-   * It assumes unpaid interest is added to the
-   * outstanding balance during the moratorium.
-   */
+ 
   const principalAfterMoratorium =
     principal + interestDuringMoratorium;
 

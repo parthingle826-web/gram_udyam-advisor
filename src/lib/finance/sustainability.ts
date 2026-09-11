@@ -66,12 +66,12 @@ export function calculateSustainability(
 
   let score = 0;
 
-  // Revenue vs expenses
+  
   if (monthlyRevenue > operatingExpenses) {
     score += 25;
   }
 
-  // DSCR
+ 
   if (dscr >= 1.5) {
     score += 30;
   } else if (dscr >= 1.2) {
@@ -80,12 +80,12 @@ export function calculateSustainability(
     score += 10;
   }
 
-  // Profitability
+  
   if (netProfit > 0) {
     score += 25;
   }
 
-  // Break-even
+  
   if (breakEvenMonths <= 24) {
     score += 20;
   } else if (breakEvenMonths <= 36) {

@@ -55,7 +55,7 @@ async function getWatsonxIAMToken(apiKey: string): Promise<string> {
 
 export function cleanJsonOutput(raw: string): string {
   let cleaned = raw.trim();
-  // Remove markdown code fences if present
+ 
   if (cleaned.startsWith("```json")) {
     cleaned = cleaned.replace(/^```json\s*/i, "").replace(/\s*```$/, "");
   } else if (cleaned.startsWith("```")) {

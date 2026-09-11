@@ -27,13 +27,7 @@ export interface AmortizationScheduleResult {
   quarters: RepaymentQuarter[];
 }
 
-/**
- * Deterministic Quarter-by-Quarter Repayment Amortization Schedule
- *
- * Handles:
- * 1. "INTEREST_ONLY" rule (standard rural finance default: borrower pays only interest during setup)
- * 2. "FULLY_DEFERRED" rule (₹0 payment during moratorium, accrued interest is capitalized into principal)
- */
+
 export function generateQuarterlySchedule(
   principal: number,
   annualInterestRate: number,
@@ -65,7 +59,7 @@ export function generateQuarterlySchedule(
   let totalInterest = 0;
   let totalPrincipal = 0;
 
-  // Process Moratorium Quarters
+  
   for (let q = 1; q <= moratoriumQuarters; q++) {
     const year = Math.ceil(q / 4);
     const opening = currentBalance;
@@ -90,7 +84,7 @@ export function generateQuarterlySchedule(
       });
       currentBalance = closing;
     } else {
-      // FULLY_DEFERRED
+      
       const installment = 0;
       const principalPaid = 0;
       const closing = opening + interest; // Capitalized
@@ -111,7 +105,7 @@ export function generateQuarterlySchedule(
     }
   }
 
-  // Calculate regular quarterly installment for post-moratorium period
+ 
   let regularQuarterlyInstallment = 0;
   if (repaymentQuarters > 0 && currentBalance > 0) {
     if (quarterlyRate === 0) {
@@ -123,7 +117,7 @@ export function generateQuarterlySchedule(
     }
   }
 
-  // Process Repayment Quarters
+ 
   for (let r = 1; r <= repaymentQuarters; r++) {
     const q = moratoriumQuarters + r;
     const year = Math.ceil(q / 4);
@@ -134,7 +128,7 @@ export function generateQuarterlySchedule(
     let installment: number;
 
     if (r === repaymentQuarters) {
-      // Final quarter: exact balance clearance
+   
       principalPaid = opening;
       installment = principalPaid + interest;
     } else {

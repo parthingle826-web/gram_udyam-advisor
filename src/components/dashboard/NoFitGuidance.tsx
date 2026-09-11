@@ -77,7 +77,7 @@ export default function NoFitGuidance({
 
   return (
     <div className="rounded-2xl border-2 border-amber-300 bg-amber-50/40 p-6 shadow-sm">
-      {/* Header */}
+     
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-start gap-3">
           <div className="rounded-xl bg-amber-100 p-2.5 text-amber-700">
@@ -96,7 +96,7 @@ export default function NoFitGuidance({
           </div>
         </div>
 
-        {/* Action Buttons */}
+      
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -118,7 +118,7 @@ export default function NoFitGuidance({
         </div>
       </div>
 
-      {/* Primary Reason */}
+     
       <div className="mt-4 rounded-xl border border-amber-200 bg-white p-4">
         <p className="text-xs font-bold uppercase tracking-wide text-amber-800">
           {t("whyNoFitTitle")}
@@ -128,7 +128,7 @@ export default function NoFitGuidance({
         </p>
       </div>
 
-      {/* Guidance Points */}
+      
       <div className="mt-4">
         <p className="text-xs font-bold uppercase tracking-wide text-slate-600">
           {t("practicalRecommendations")}
@@ -143,7 +143,7 @@ export default function NoFitGuidance({
         </ul>
       </div>
 
-      {/* Concrete Alternative Pathways */}
+      
       {alternatives.length > 0 && (
         <div className="mt-6">
           <p className="text-xs font-bold uppercase tracking-wide text-slate-600">
