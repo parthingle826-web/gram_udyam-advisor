@@ -2,7 +2,7 @@
 
 **AI-driven hyper-local business advisory and financial structuring assistant for rural micro-entrepreneurs.**
 
-🔗 **Live Demo:** [gram-udyam-advisor-bggiokqbl-parthingle826-2567s-projects.vercel.app](https://gram-udyam-advisor-bggiokqbl-parthingle826-2567s-projects.vercel.app/)
+🔗 **Live Demo:** (https://gram-udyam-advisor.vercel.app/)
 
 Gram Udyam Advisor helps first-time rural entrepreneurs applying for government concessional-credit schemes (margin-money model) make data-backed business decisions — instead of relying on anecdotal success stories and guesswork. It combines a hyper-local market feasibility engine, a deterministic loan/scheme calculator, and a guided fallback path so no user is ever left without an answer.
 
