@@ -254,7 +254,7 @@ function ReportContent() {
             <div className="flex items-center gap-2 mb-4">
               <Coins className="text-indigo-600" size={20} />
               <h3 className="text-base font-bold text-slate-900">
-                {t("financingSchemeTerms")}: {result.finance.scheme.name}
+                {t("recommendedScheme") || "Scheme Recommended"}: {result.finance.scheme.name}
               </h3>
             </div>
             <div className="grid gap-4 sm:grid-cols-4">

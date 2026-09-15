@@ -222,7 +222,7 @@ export const translations = {
       "The business may face financial pressure. Consider reducing costs, increasing revenue potential or starting with a smaller project.",
 
    
-    recommendedScheme: "Recommended Scheme",
+    recommendedScheme: "Scheme Recommended",
     microFinance: "Micro Finance Scheme",
     termLoan: "Term Loan Scheme",
     noSuitableScheme: "No Suitable Scheme",

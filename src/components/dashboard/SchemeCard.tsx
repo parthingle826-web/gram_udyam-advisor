@@ -41,7 +41,7 @@ export default function SchemeCard({ scheme, projectCost }: SchemeCardProps) {
         <div>
           <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-600">
             <ShieldCheck size={16} />
-            {t("schemeMatch")}
+            {t("recommendedScheme") || "Scheme Recommended"}: {scheme.name}
           </div>
           <h2 className="mt-1 text-2xl font-bold text-slate-900">
             {scheme.name}

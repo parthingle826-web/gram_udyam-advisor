@@ -14,9 +14,9 @@ export function calculateFinancialStructure(
 
   const marginPercentage = 10;
 
-  const projectCost = marginCapital / (marginPercentage / 100);
+  const projectCost = Math.round(marginCapital / (marginPercentage / 100));
 
-  const loanAmount = projectCost - marginCapital;
+  const loanAmount = Math.round(projectCost * 0.90);
 
   return {
     marginCapital,

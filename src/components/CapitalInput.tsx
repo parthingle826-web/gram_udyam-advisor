@@ -34,8 +34,7 @@ export default function CapitalInput({
         <input
           id="margin-capital"
           type="number"
-          min="1"
-          step="1000"
+          step="any"
           value={value}
           onChange={(event) => {
             const raw = event.target.value;
@@ -66,27 +65,47 @@ export default function CapitalInput({
         {t("marginCapitalDesc")}
       </p>
 
-      {typeof value === "number" && value > 0 && (
-        <div className="rounded-xl bg-slate-50 p-4 border border-slate-100">
-          <p className="text-xs text-slate-500">
-            {t("estimatedProjectSize")}
-          </p>
+      {typeof value === "number" && value > 0 && (() => {
+        const estProjectCost = Math.round(value / 0.10);
+        const estAgencyFinance = Math.round(estProjectCost * 0.90);
+        const derivedSchemeLabel =
+          estProjectCost <= 140000
+            ? t("microFinance") || "Micro Finance Scheme"
+            : estProjectCost <= 5000000
+            ? t("termLoan") || "Term Loan Scheme"
+            : t("noSuitableScheme") || "No-Fit Guidance Engine";
 
-          <p className="mt-1 text-lg font-bold text-slate-900">
-            ₹
-            {(value * 10).toLocaleString(
-              "en-IN"
-            )}
-          </p>
+        return (
+          <div className="rounded-xl bg-slate-50 p-4 border border-slate-100 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-slate-500">
+                {t("estimatedProjectSize")}
+              </span>
+              <span className="text-sm font-bold text-slate-900">
+                ₹{estProjectCost.toLocaleString("en-IN")}
+              </span>
+            </div>
 
-          <p className="mt-1 text-xs text-slate-500">
-            {t("estimatedAgencyFinance")}: ₹
-            {(value * 9).toLocaleString(
-              "en-IN"
-            )}
-          </p>
-        </div>
-      )}
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-slate-500">
+                {t("estimatedAgencyFinance")}
+              </span>
+              <span className="text-sm font-semibold text-slate-700">
+                ₹{estAgencyFinance.toLocaleString("en-IN")}
+              </span>
+            </div>
+
+            <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
+              <span className="text-xs font-medium text-slate-600">
+                {t("recommendedScheme") || "Scheme Recommended"}:
+              </span>
+              <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                {derivedSchemeLabel}
+              </span>
+            </div>
+          </div>
+        );
+      })()}
 
       {error && (
         <p className="text-xs text-red-600">
