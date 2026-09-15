@@ -73,7 +73,7 @@ OTP-based mobile number login.
 ## 🚀 Getting Started
 
 ### Live App
-Try it here: **https://gram-udyam-advisor-bggiokqbl-parthingle826-2567s-projects.vercel.app/**
+Try it here: **https://gram-udyam-advisor.vercel.app/**
 
 ### Prerequisites
 - Node.js 18+
