@@ -5,7 +5,9 @@ import {
   Text,
   View,
   StyleSheet,
+  Image,
 } from "@react-pdf/renderer";
+import { LOGO_BASE64 } from "./logoDataUri";
 import type { BusinessAssessment } from "@/types/business";
 import type { RepaymentQuarter } from "@/lib/finance/schedule";
 import type { ViabilityFactorBreakdown } from "@/lib/viability/score";
@@ -27,7 +29,17 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "center",
+  },
+  headerBrandContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerLogo: {
+    width: 38,
+    height: 38,
+    borderRadius: 8,
+    marginRight: 10,
   },
   headerTitle: {
     fontSize: 20,
@@ -225,11 +237,14 @@ export default function BusinessReportPDF({
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <View>
-            <Text style={styles.headerTitle}>Gram Udyam Advisor</Text>
-            <Text style={styles.headerSubtitle}>
-              Micro-Enterprise Viability & Financial Advisory
-            </Text>
+          <View style={styles.headerBrandContainer}>
+            <Image src={LOGO_BASE64} style={styles.headerLogo} />
+            <View>
+              <Text style={styles.headerTitle}>Gram Udyam Advisor</Text>
+              <Text style={styles.headerSubtitle}>
+                Micro-Enterprise Viability & Financial Advisory
+              </Text>
+            </View>
           </View>
           <Text style={styles.dateText}>
             Generated: {new Date().toLocaleDateString("en-IN")}

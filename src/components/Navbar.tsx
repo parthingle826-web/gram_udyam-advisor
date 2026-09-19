@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Home,
@@ -53,9 +54,14 @@ export default function Navbar() {
           className="flex items-center gap-2"
           onClick={() => setOpen(false)}
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-sm font-bold text-white">
-            GU
-          </div>
+          <Image
+            src="/logo-navbar.png"
+            alt="Gram Udyam Advisor logo"
+            width={36}
+            height={36}
+            className="h-9 w-9 rounded-xl object-contain"
+            priority
+          />
 
           <div>
             <div className="text-sm font-bold text-slate-900">

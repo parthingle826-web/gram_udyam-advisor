@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
@@ -17,9 +18,17 @@ export default function LoginPage() {
         <div className="text-center">
           <Link
             href="/"
-            className="text-2xl font-bold text-emerald-600"
+            className="inline-flex flex-col items-center gap-2 text-2xl font-bold text-emerald-600"
           >
-            Gram Udyam Advisor
+            <Image
+              src="/logo-navbar.png"
+              alt="Gram Udyam Advisor logo"
+              width={52}
+              height={52}
+              className="h-13 w-13 rounded-2xl object-contain shadow-xs"
+              priority
+            />
+            <span>Gram Udyam Advisor</span>
           </Link>
 
           <h1 className="mt-8 text-2xl font-bold text-slate-900">
