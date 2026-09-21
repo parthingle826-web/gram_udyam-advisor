@@ -1,3 +1,8 @@
+import {
+  MIN_APPLICANT_AGE,
+  DEFAULT_MAX_APPLICANT_AGE,
+} from "../utils/constants";
+
 export type SchemeType =
   | "MICRO_FINANCE"
   | "TERM_LOAN"
@@ -26,7 +31,74 @@ export interface SchemeResult {
   alternatives?: SchemeAlternative[];
 }
 
-export function routeScheme(projectCost: number): SchemeResult {
+export function routeScheme(
+  projectCost: number,
+  applicantAge?: number
+): SchemeResult {
+  if (applicantAge !== undefined && applicantAge < MIN_APPLICANT_AGE) {
+    return {
+      scheme: "NOT_ELIGIBLE",
+      name: "Minor Applicant (Age < 18)",
+      suitable: false,
+      interestRate: 0,
+      tenureYears: 0,
+      moratoriumMonths: 0,
+      maxProjectCost: 0,
+      maxLoanAmount: 0,
+      reason:
+        "Under Indian banking guidelines and the Micro Finance / Term Loan scheme rules, applicants must be at least 18 years old to independently apply for a loan. Co-applicant / guardian-based applications are not supported in this tool yet.",
+      guidance: [
+        "Under Indian banking guidelines and the Micro Finance / Term Loan scheme rules, applicants must be at least 18 years old to independently apply for a loan. Co-applicant / guardian-based applications are not supported in this tool yet.",
+        "Applicants must be at least 18 years old to legally execute debt contracts under Indian law.",
+      ],
+      alternatives: [
+        {
+          title: "Adult Family Member as Primary Applicant",
+          description:
+            "Apply with an adult family member (18+ years) as the designated primary borrower.",
+          action: "Re-apply with parent/guardian details.",
+        },
+      ],
+    };
+  }
+
+  if (applicantAge !== undefined && applicantAge > DEFAULT_MAX_APPLICANT_AGE) {
+    return {
+      scheme: "NOT_ELIGIBLE",
+      name: "Applicant Age Exceeds Standard Scheme Limit",
+      suitable: false,
+      interestRate: 0,
+      tenureYears: 0,
+      moratoriumMonths: 0,
+      maxProjectCost: 0,
+      maxLoanAmount: 0,
+      reason: `Most concession/margin schemes set an upper applicant age limit (typically 50–60 depending on the agency/SCA). At ${applicantAge} years, you may not be eligible for standard individual Micro Finance or Term Loan schemes.`,
+      guidance: [
+        "Most concession/margin schemes set an upper applicant age limit (typically 50–60 depending on the agency/SCA). You may not be eligible for standard Micro Finance or Term Loan schemes as an individual borrower.",
+        "Consider applying through a younger family member as the primary applicant, or explore senior-citizen enterprise grants / self-help group collective schemes.",
+      ],
+      alternatives: [
+        {
+          title: "Younger Family Member as Primary Applicant",
+          description:
+            "Nominate a working-age adult family member (18–55 years) as the primary borrower while you advise on technical and local business operations.",
+          action: "Re-apply with the family member's details.",
+        },
+        {
+          title: "Self-Help Group (SHG) / Collective Lending",
+          description:
+            "Access village-level collective revolving credit or producer groups without individual age restrictions.",
+          action: "Contact your local Gram Panchayat NRLM representative.",
+        },
+        {
+          title: "Senior Enterprise Grants & Subsidies",
+          description:
+            "Inquire at the District Social Welfare Department or KVIC for non-credit grant-in-aid programs.",
+          action: "Visit your local DIC or social welfare office.",
+        },
+      ],
+    };
+  }
  
   if (!Number.isFinite(projectCost) || projectCost <= 0) {
     return {

@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { MapPin, Sparkles } from "lucide-react";
+import { MapPin, Sparkles, AlertCircle, User } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
@@ -15,6 +15,7 @@ import RepaymentTable from "@/components/dashboard/RepaymentTable";
 import SchemeCard from "@/components/dashboard/SchemeCard";
 import ViabilityScore from "@/components/dashboard/ViabilityScore";
 import NoFitGuidance from "@/components/dashboard/NoFitGuidance";
+import ConversationalAgent from "@/components/chat/ConversationalAgent";
 
 import BusinessPlan from "@/components/ai/BusinessPlan";
 import OpportunityCard from "@/components/ai/OpportunityCard";
@@ -23,6 +24,10 @@ import SWOTCard from "@/components/ai/SWOTCard";
 
 import { generateAdvisory } from "@/lib/advisory/generate-advisory";
 import { analyzeBusiness } from "@/lib/business/analyze-business";
+import {
+  MIN_APPLICANT_AGE,
+  DEFAULT_MAX_APPLICANT_AGE,
+} from "@/lib/utils/constants";
 
 interface MarketResult {
   totalBusinesses?: number;
@@ -67,6 +72,11 @@ function DashboardContent() {
       );
 
       const fallbackAssessment = {
+        fullName: params.get("fullName") || undefined,
+        age: params.get("age") ? Number(params.get("age")) : undefined,
+        mobileNumber: params.get("mobileNumber") || undefined,
+        address: params.get("address") || undefined,
+
         businessName:
           params.get("businessName") ||
           "Your Business",
@@ -179,6 +189,42 @@ function DashboardContent() {
     );
   }
 
+  // Age Gate: Applicants under 18 cannot independently access loan schemes
+  if (assessment.age !== undefined && assessment.age < MIN_APPLICANT_AGE) {
+    return (
+      <main className="min-h-screen bg-slate-50">
+        <Navbar />
+        <div className="mx-auto max-w-2xl px-6 py-16">
+          <div className="rounded-2xl border border-red-200 bg-white p-8 shadow-sm text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-red-100 text-red-600 mb-4">
+              <AlertCircle size={28} />
+            </div>
+            <h1 className="text-2xl font-bold text-slate-900">
+              Age Eligibility Gate: Under 18 Years
+            </h1>
+            <p className="mt-4 text-sm text-slate-600 leading-relaxed">
+              {t("errAgeUnder18")}
+            </p>
+            <div className="mt-6 rounded-xl border border-slate-100 bg-slate-50 p-4 text-left text-xs text-slate-600 space-y-1.5">
+              <p className="font-semibold text-slate-800">Application Notice:</p>
+              <p>• Minimum applicant age required by concessional loan guidelines: 18 years</p>
+              <p>• Applicant age entered: {assessment.age} years</p>
+              <p>• Minors cannot independently enter credit contracts under Indian banking laws. Please apply with an adult family member as the primary applicant.</p>
+            </div>
+            <div className="mt-8">
+              <a
+                href="/assessment"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition"
+              >
+                Return to Assessment Form
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const result = analyzeBusiness(assessment);
 
   const advisory = generateAdvisory({
@@ -217,24 +263,24 @@ function DashboardContent() {
   });
 
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
       <Navbar />
 
      
-      <section className="border-b bg-white">
+      <section className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
         <div className="mx-auto max-w-7xl px-6 py-8">
           <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <div>
-              <div className="flex items-center gap-2 text-sm font-medium text-indigo-600">
+              <div className="flex items-center gap-2 text-sm font-medium text-indigo-600 dark:text-indigo-400">
                 <Sparkles size={16} />
                 Gram Udyam Advisor
               </div>
 
-              <h1 className="mt-2 text-3xl font-bold text-gray-900">
+              <h1 className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
                 {assessment.businessName}
               </h1>
 
-              <p className="mt-2 flex items-center gap-2 text-sm text-gray-500">
+              <p className="mt-2 flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400">
                 <MapPin size={16} />
 
                 {[
@@ -247,21 +293,32 @@ function DashboardContent() {
                   .join(", ") ||
                   "Local business assessment"}
               </p>
+
+              {assessment.fullName && (
+                <p className="mt-2 flex items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-300">
+                  <User size={14} className="text-slate-400 dark:text-slate-500" />
+                  <span>
+                    Applicant: <strong className="text-slate-900 dark:text-white">{assessment.fullName}</strong>
+                  </span>
+                  {assessment.age ? <span>• {assessment.age} yrs</span> : null}
+                  {assessment.mobileNumber ? <span>• {assessment.mobileNumber}</span> : null}
+                </p>
+              )}
             </div>
 
-            <div className="flex items-center gap-3">
-              <Link
+            <div className="flex flex-wrap items-center gap-3">
+              {/* <Link
                 href={`/report?business=${encodeURIComponent(assessment.businessName)}`}
                 className="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 inline-flex items-center gap-2"
               >
                 📄 {t("viewReport")}
-              </Link>
-              <div className="rounded-xl bg-indigo-50 px-5 py-3">
-                <p className="text-xs font-medium uppercase tracking-wide text-indigo-600">
+              </Link> */}
+              <div className="rounded-xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-100 dark:border-indigo-900/40 px-5 py-3">
+                <p className="text-xs font-medium uppercase tracking-wide text-indigo-600 dark:text-indigo-400">
                   {t("category")}
                 </p>
 
-                <p className="mt-1 font-semibold text-indigo-950">
+                <p className="mt-1 font-semibold uppercase text-indigo-950 dark:text-indigo-200">
                   {assessment.category}
                 </p>
               </div>
@@ -270,19 +327,34 @@ function DashboardContent() {
         </div>
       </section>
 
-     
       <div className="mx-auto max-w-7xl space-y-8 px-6 py-8">
+        {/* Senior Applicant Guidance Note */}
+        {assessment.age !== undefined && assessment.age > DEFAULT_MAX_APPLICANT_AGE && (
+          <div className="rounded-2xl border border-amber-300 dark:border-amber-800/60 bg-amber-50 dark:bg-amber-950/40 p-5 text-amber-900 dark:text-amber-200 shadow-sm">
+            <div className="flex items-start gap-3">
+              <AlertCircle size={22} className="text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-bold text-base text-amber-950 dark:text-amber-200">
+                  Senior Citizen Applicant Guidance Note (Age: {assessment.age} years)
+                </h3>
+                <p className="mt-1 text-sm leading-relaxed text-amber-900 dark:text-amber-300">
+                  {t("seniorNoticeBanner")}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       
-        <section className="rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
-          <p className="text-sm font-medium text-gray-500">
+        <section className="rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+          <p className="text-sm font-medium text-gray-500 dark:text-slate-400">
             {t("overallRecommendation")}
           </p>
 
-          <h2 className="mt-2 text-2xl font-bold text-gray-900">
+          <h2 className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
             {result.decision.replaceAll("_", " ")}
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-gray-600 dark:text-slate-300">
             {result.viability.recommendation}
           </p>
         </section>
@@ -554,6 +626,9 @@ function DashboardContent() {
             result.viability.score
           }
         />
+
+        {/* Persistent Conversational AI Agent */}
+        <ConversationalAgent assessment={assessment} result={result} />
       </div>
     </main>
   );
@@ -567,12 +642,12 @@ function MetricCard({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-      <p className="text-sm text-gray-500">
+    <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+      <p className="text-sm text-gray-500 dark:text-slate-400">
         {title}
       </p>
 
-      <p className="mt-2 text-2xl font-bold text-gray-900">
+      <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
         {value}
       </p>
     </div>
@@ -591,10 +666,10 @@ export default function DashboardPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950">
           <div className="text-center">
-            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600" />
-            <p className="mt-4 text-sm text-gray-500">
+            <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-indigo-200 dark:border-indigo-900 border-t-indigo-600 dark:border-t-indigo-400" />
+            <p className="mt-4 text-sm text-gray-500 dark:text-slate-400">
               Loading dashboard...
             </p>
           </div>

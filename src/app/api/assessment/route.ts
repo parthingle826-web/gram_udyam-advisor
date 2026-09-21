@@ -38,6 +38,11 @@ export async function POST(request: Request) {
     }
 
     const normalizedAssessment = {
+      fullName: assessment.fullName ? String(assessment.fullName) : undefined,
+      age: assessment.age !== undefined && assessment.age !== "" ? Number(assessment.age) : undefined,
+      mobileNumber: assessment.mobileNumber ? String(assessment.mobileNumber) : undefined,
+      address: assessment.address ? String(assessment.address) : undefined,
+
       businessName: String(assessment.businessName),
       category: String(assessment.category),
 
@@ -81,6 +86,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       result,
+      assessment: normalizedAssessment,
     });
   } catch (error) {
     console.error("Assessment API error:", error);

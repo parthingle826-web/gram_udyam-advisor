@@ -1,3 +1,5 @@
+import { BUSINESS_CATEGORIES } from "../../data/business-categories";
+
 export interface ViabilityInput {
   marketDemand: number;
   competition: number;
@@ -11,6 +13,10 @@ export interface ViabilityInput {
   monthlyRevenue?: number;
   operatingExpenses?: number;
   monthlyEMI?: number;
+  category?: string;
+  marginCapital?: number;
+  projectCost?: number;
+  competitorCount?: number;
 }
 
 export interface FactorDetail {
@@ -49,14 +55,37 @@ export function calculateViabilityScore(
     budgetFit,
     seasonalRisk,
     experienceYears = 1,
-    hasLandOrShop = true,
+    hasLandOrShop,
     monthlyRevenue,
     operatingExpenses = 0,
     monthlyEMI,
+    category,
+    projectCost,
+    competitorCount,
+    localResources,
   } = input;
 
- 
-  const saturationScore = clamp(marketDemand);
+  // Resolve category benchmark if available
+  const catBenchmark = category
+    ? BUSINESS_CATEGORIES.find(
+        (c) =>
+          c.id.toLowerCase() === category.toLowerCase() ||
+          c.name.toLowerCase() === category.toLowerCase()
+      )
+    : undefined;
+
+  // 1. Market Saturation & Demand (weight 20%)
+  let baseDemand = marketDemand;
+  if (catBenchmark?.revenuePotential === "HIGH") {
+    baseDemand += 6;
+  } else if (catBenchmark?.revenuePotential === "LOW") {
+    baseDemand -= 6;
+  }
+  if (localResources !== undefined) {
+    baseDemand += Math.round((localResources - 50) * 0.1);
+  }
+  const saturationScore = clamp(baseDemand);
+
   const marketSaturation: FactorDetail = {
     name: "Market Saturation & Demand",
     score: saturationScore,
@@ -66,37 +95,70 @@ export function calculateViabilityScore(
       saturationScore >= 70
         ? "Strong consumer demand headroom in the local trade area."
         : saturationScore >= 45
-        ? "Moderate market depth; marketing required to capture share."
+        ? "Moderate market depth; targeted promotion advised to capture share."
         : "Market near saturation or demand is sluggish in this cluster.",
   };
 
-  
-  const densityScore = clamp(100 - competition);
+  // 2. Competitor Density (weight 20%)
+  let densityScore: number;
+  let densityDesc: string;
+
+  if (competitorCount !== undefined && competitorCount >= 0) {
+    let countBase = 70;
+    if (competitorCount <= 1) {
+      countBase = 95;
+    } else if (competitorCount <= 3) {
+      countBase = 85;
+    } else if (competitorCount <= 6) {
+      countBase = 68;
+    } else if (competitorCount <= 10) {
+      countBase = 50;
+    } else if (competitorCount <= 15) {
+      countBase = 35;
+    } else {
+      countBase = 20;
+    }
+    // Blend with slider input
+    densityScore = clamp(countBase * 0.6 + (100 - competition) * 0.4);
+    densityDesc =
+      competitorCount <= 2
+        ? `Low competitor presence (${competitorCount} rival${competitorCount === 1 ? "" : "s"} in local area).`
+        : competitorCount <= 7
+        ? `Moderate competitor density (${competitorCount} active alternatives). Differentiation recommended.`
+        : `High competitive cluster (${competitorCount} direct competitors nearby). Distinct positioning required.`;
+  } else {
+    densityScore = clamp(100 - competition);
+    densityDesc =
+      densityScore >= 65
+        ? "Low competitor density in immediate 2-5km radius."
+        : densityScore >= 40
+        ? "Moderate competition; differentiation on quality or service advised."
+        : "High competitor cluster; requires distinct pricing or product offering.";
+  }
+
   const competitorDensity: FactorDetail = {
     name: "Competitor Density",
     score: densityScore,
     weight: 20,
     rating: densityScore >= 65 ? "POSITIVE" : densityScore >= 40 ? "NEUTRAL" : "RISK",
-    description:
-      densityScore >= 65
-        ? "Low competitor density in immediate 2-5km radius."
-        : densityScore >= 40
-        ? "Moderate competition; differentiation on quality/service advised."
-        : "High competitor cluster; requires distinct pricing/product offering.",
+    description: densityDesc,
   };
 
-
+  // 3. Income-to-EMI & Budget Capacity (weight 25%)
   let incomeEmiScore = clamp(budgetFit);
   let incomeEmiDesc = "Capital budget aligns well with setup requirements.";
 
-  if (monthlyRevenue && monthlyRevenue > 0 && monthlyEMI && monthlyEMI > 0) {
+  if (monthlyRevenue !== undefined && monthlyRevenue > 0 && monthlyEMI !== undefined && monthlyEMI > 0) {
     const netIncome = monthlyRevenue - operatingExpenses;
     const ratio = netIncome / monthlyEMI;
-    if (ratio >= 2.0) {
+    if (ratio >= 2.5) {
       incomeEmiScore = 95;
       incomeEmiDesc = `Strong debt-service capacity (Income-to-EMI ~${ratio.toFixed(1)}x).`;
+    } else if (ratio >= 2.0) {
+      incomeEmiScore = 88;
+      incomeEmiDesc = `Robust debt-service capacity (Income-to-EMI ~${ratio.toFixed(1)}x).`;
     } else if (ratio >= 1.5) {
-      incomeEmiScore = 80;
+      incomeEmiScore = 78;
       incomeEmiDesc = `Adequate debt-service coverage (Income-to-EMI ~${ratio.toFixed(1)}x).`;
     } else if (ratio >= 1.2) {
       incomeEmiScore = 65;
@@ -104,9 +166,26 @@ export function calculateViabilityScore(
     } else if (ratio >= 1.0) {
       incomeEmiScore = 50;
       incomeEmiDesc = `Borderline cash flow coverage (Income-to-EMI ~${ratio.toFixed(1)}x).`;
+    } else if (ratio > 0) {
+      incomeEmiScore = 32;
+      incomeEmiDesc = `Net operating income is insufficient to cover estimated EMI (~${ratio.toFixed(1)}x).`;
     } else {
-      incomeEmiScore = 25;
-      incomeEmiDesc = `Net operating income is insufficient to service estimated EMI.`;
+      incomeEmiScore = 15;
+      incomeEmiDesc = "Operating at a deficit; cannot service debt without restructuring.";
+    }
+  } else if (projectCost !== undefined && catBenchmark) {
+    if (
+      projectCost >= catBenchmark.requiredCapital.min &&
+      projectCost <= catBenchmark.requiredCapital.max
+    ) {
+      incomeEmiScore = 82;
+      incomeEmiDesc = `Project cost (₹${projectCost.toLocaleString("en-IN")}) matches typical ${catBenchmark.name} requirements.`;
+    } else if (projectCost < catBenchmark.requiredCapital.min) {
+      incomeEmiScore = 55;
+      incomeEmiDesc = `Capital is below typical setup threshold (₹${catBenchmark.requiredCapital.min.toLocaleString("en-IN")}) for ${catBenchmark.name}.`;
+    } else {
+      incomeEmiScore = 62;
+      incomeEmiDesc = `Capital exceeds standard scale for ${catBenchmark.name}; verify asset allocations.`;
     }
   }
 
@@ -118,8 +197,15 @@ export function calculateViabilityScore(
     description: incomeEmiDesc,
   };
 
-  
-  const seasonScore = clamp(100 - seasonalRisk);
+  // 4. Seasonality & Cash Flow Stability (weight 15%)
+  let baseSeason = 100 - seasonalRisk;
+  if (catBenchmark?.seasonalRisk === "HIGH") {
+    baseSeason -= 10;
+  } else if (catBenchmark?.seasonalRisk === "LOW") {
+    baseSeason += 6;
+  }
+  const seasonScore = clamp(baseSeason);
+
   const seasonalityRisk: FactorDetail = {
     name: "Seasonality & Cash Flow Stability",
     score: seasonScore,
@@ -133,12 +219,25 @@ export function calculateViabilityScore(
         : "Significant seasonal volatility; require off-season revenue diversification.",
   };
 
-  
+  // 5. Founder Experience & Asset Readiness (weight 20%)
   let expBase = 45;
-  if (experienceYears >= 5) expBase = 90;
-  else if (experienceYears >= 3) expBase = 80;
-  else if (experienceYears >= 1) expBase = 65;
-  if (hasLandOrShop) expBase = Math.min(100, expBase + 10);
+  if (experienceYears >= 5) {
+    expBase = 90;
+  } else if (experienceYears >= 3) {
+    expBase = 80;
+  } else if (experienceYears >= 1) {
+    expBase = 65;
+  } else if (experienceYears > 0) {
+    expBase = 52;
+  } else {
+    expBase = 38;
+  }
+
+  if (hasLandOrShop === true) {
+    expBase = Math.min(100, expBase + 10);
+  } else if (hasLandOrShop === false) {
+    expBase = Math.max(20, expBase - 8);
+  }
 
   const expScore = clamp(expBase);
   const founderExperience: FactorDetail = {
@@ -148,13 +247,13 @@ export function calculateViabilityScore(
     rating: expScore >= 70 ? "POSITIVE" : expScore >= 45 ? "NEUTRAL" : "RISK",
     description:
       expScore >= 70
-        ? `${experienceYears} yr${experienceYears > 1 ? "s" : ""} sector experience${hasLandOrShop ? " + land/premises ready" : ""}.`
+        ? `${experienceYears} yr${experienceYears > 1 ? "s" : ""} sector experience${hasLandOrShop ? " + premises ready" : ""}.`
         : expScore >= 45
         ? `Foundational experience (${experienceYears} yr${experienceYears > 1 ? "s" : ""}); apprenticeship or training helpful.`
-        : "First-time entrepreneur; recommended to take RSETI skill orientation.",
+        : "First-time entrepreneur; recommended to take RSETI or local skill orientation.",
   };
 
-  
+  // Composite Viability Score
   const compositeScore = clamp(
     marketSaturation.score * 0.20 +
       competitorDensity.score * 0.20 +

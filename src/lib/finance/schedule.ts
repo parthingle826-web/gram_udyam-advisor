@@ -173,3 +173,38 @@ export function generateQuarterlySchedule(
     quarters,
   };
 }
+
+/**
+ * Safe version of generateQuarterlySchedule that returns null if inputs are invalid or non-positive
+ * instead of throwing an unhandled exception.
+ */
+export function safeGenerateQuarterlySchedule(
+  principal: number,
+  annualInterestRate: number,
+  tenureYears: number,
+  moratoriumMonths: number = 0,
+  moratoriumRule: MoratoriumRule = "INTEREST_ONLY"
+): AmortizationScheduleResult | null {
+  if (
+    !Number.isFinite(principal) ||
+    principal <= 0 ||
+    !Number.isFinite(annualInterestRate) ||
+    annualInterestRate < 0 ||
+    !Number.isFinite(tenureYears) ||
+    tenureYears <= 0
+  ) {
+    return null;
+  }
+  try {
+    return generateQuarterlySchedule(
+      principal,
+      annualInterestRate,
+      tenureYears,
+      moratoriumMonths,
+      moratoriumRule
+    );
+  } catch {
+    return null;
+  }
+}
+

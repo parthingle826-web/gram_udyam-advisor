@@ -1,4 +1,9 @@
 export interface BusinessAssessment {
+  fullName?: string;
+  age?: number;
+  mobileNumber?: string;
+  address?: string;
+
   businessName: string;
   category: string;
 
@@ -17,6 +22,9 @@ export interface BusinessAssessment {
   profitPotential: number;
 
 
-monthlyRevenue?: number;
-operatingExpenses?: number;
+  monthlyRevenue?: number;
+  operatingExpenses?: number;
+
+  experienceYears?: number;
+  hasLandOrShop?: boolean;
 }

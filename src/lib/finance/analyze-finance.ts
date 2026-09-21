@@ -20,15 +20,14 @@ export interface FinancialAnalysis {
 export function analyzeFinance(
   marginCapital: number,
   monthlyRevenue: number = 0,
-  operatingExpenses: number = 0
+  operatingExpenses: number = 0,
+  applicantAge?: number
 ): FinancialAnalysis {
-
   const financial =
     calculateFinancialStructure(marginCapital);
 
-
   const scheme =
-    routeScheme(financial.projectCost);
+    routeScheme(financial.projectCost, applicantAge);
 
   
   if (!scheme.suitable) {

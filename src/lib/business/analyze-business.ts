@@ -20,10 +20,17 @@ export interface BusinessAnalysis {
   nextSteps: string[];
 }
 
+import { MIN_APPLICANT_AGE } from "../utils/constants";
+
 export function analyzeBusiness(
   assessment: BusinessAssessment
 ): BusinessAnalysis {
-
+  const finance = analyzeFinance(
+    assessment.marginCapital,
+    assessment.monthlyRevenue ?? 0,
+    assessment.operatingExpenses ?? 0,
+    assessment.age
+  );
 
   const viability = calculateViabilityScore({
     marketDemand: assessment.marketDemand,
@@ -32,15 +39,15 @@ export function analyzeBusiness(
     localResources: assessment.localResources,
     seasonalRisk: assessment.seasonalRisk,
     profitPotential: assessment.profitPotential,
+    experienceYears: assessment.experienceYears,
+    hasLandOrShop: assessment.hasLandOrShop,
+    monthlyRevenue: assessment.monthlyRevenue,
+    operatingExpenses: assessment.operatingExpenses,
+    monthlyEMI: finance.monthlyEMI,
+    category: assessment.category,
+    marginCapital: assessment.marginCapital,
+    projectCost: finance.projectCost,
   });
-
-
-
- const finance = analyzeFinance(
-  assessment.marginCapital,
-  assessment.monthlyRevenue ?? 0,
-  assessment.operatingExpenses ?? 0
-);
 
   
 

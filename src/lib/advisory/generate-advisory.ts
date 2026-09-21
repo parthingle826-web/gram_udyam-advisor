@@ -211,13 +211,13 @@ export function generateAdvisory(
  
 
   const confidence = Math.min(
-    95,
+    98,
     Math.max(
-      50,
+      15,
       Math.round(
-        50 +
-          input.viabilityScore * 0.35 +
-          (input.competitorCount <= 10 ? 10 : 0)
+        input.viabilityScore * 0.9 +
+          (input.competitorCount <= 3 ? 5 : input.competitorCount <= 8 ? 2 : -4) +
+          (input.schemeSuitable ? 5 : -5)
       )
     )
   );

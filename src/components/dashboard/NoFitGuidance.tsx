@@ -76,21 +76,21 @@ export default function NoFitGuidance({
   }
 
   return (
-    <div className="rounded-2xl border-2 border-amber-300 bg-amber-50/40 p-6 shadow-sm">
+    <div className="rounded-2xl border-2 border-amber-300 dark:border-amber-700/60 bg-amber-50/40 dark:bg-amber-950/30 p-6 shadow-sm">
      
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-start gap-3">
-          <div className="rounded-xl bg-amber-100 p-2.5 text-amber-700">
+          <div className="rounded-xl bg-amber-100 dark:bg-amber-900/60 p-2.5 text-amber-700 dark:text-amber-300">
             {isZeroData ? <HelpCircle size={24} /> : <AlertCircle size={24} />}
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-amber-200/80 px-2.5 py-0.5 text-xs font-bold text-amber-900">
+              <span className="rounded-full bg-amber-200/80 dark:bg-amber-900/80 px-2.5 py-0.5 text-xs font-bold text-amber-900 dark:text-amber-200">
                 {t("fallbackEngineBadge")}
               </span>
-              <span className="text-xs text-amber-800">Module 3</span>
+              <span className="text-xs text-amber-800 dark:text-amber-400">Module 3</span>
             </div>
-            <h3 className="mt-1 text-xl font-bold text-slate-900">
+            <h3 className="mt-1 text-xl font-bold text-slate-900 dark:text-white">
               {displayTitle}
             </h3>
           </div>
@@ -101,16 +101,16 @@ export default function NoFitGuidance({
           <button
             type="button"
             onClick={handleCopy}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-amber-300 bg-white px-3 py-2 text-xs font-semibold text-amber-900 shadow-sm transition hover:bg-amber-50"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-amber-300 dark:border-amber-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-semibold text-amber-900 dark:text-amber-200 shadow-sm transition hover:bg-amber-50 dark:hover:bg-slate-700"
           >
-            {copied ? <Check size={14} className="text-emerald-600" /> : <Sparkles size={14} />}
+            {copied ? <Check size={14} className="text-emerald-600 dark:text-emerald-400" /> : <Sparkles size={14} />}
             {copied ? t("copied") : t("copyAdvice")}
           </button>
 
           <button
             type="button"
             onClick={handleExportGuidance}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-amber-900 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-amber-950"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-amber-900 dark:bg-amber-700 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-amber-950 dark:hover:bg-amber-600"
           >
             <Download size={14} />
             {t("exportGuidance")}
@@ -119,24 +119,24 @@ export default function NoFitGuidance({
       </div>
 
      
-      <div className="mt-4 rounded-xl border border-amber-200 bg-white p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-amber-800">
+      <div className="mt-4 rounded-xl border border-amber-200 dark:border-amber-800/60 bg-white dark:bg-slate-900 p-4">
+        <p className="text-xs font-bold uppercase tracking-wide text-amber-800 dark:text-amber-400">
           {t("whyNoFitTitle")}
         </p>
-        <p className="mt-1 text-sm font-medium leading-6 text-slate-800">
+        <p className="mt-1 text-sm font-medium leading-6 text-slate-800 dark:text-slate-200">
           {reason}
         </p>
       </div>
 
       
       <div className="mt-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-slate-600">
+        <p className="text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-slate-400">
           {t("practicalRecommendations")}
         </p>
         <ul className="mt-2 space-y-2">
           {guidance.map((item, index) => (
-            <li key={index} className="flex items-start gap-2.5 text-sm text-slate-700">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-600" />
+            <li key={index} className="flex items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-600 dark:bg-amber-400" />
               <span>{item}</span>
             </li>
           ))}
@@ -146,23 +146,23 @@ export default function NoFitGuidance({
       
       {alternatives.length > 0 && (
         <div className="mt-6">
-          <p className="text-xs font-bold uppercase tracking-wide text-slate-600">
+          <p className="text-xs font-bold uppercase tracking-wide text-slate-600 dark:text-slate-400">
             {t("alternativePathwaysTitle")}
           </p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             {alternatives.map((alt, index) => (
               <div
                 key={index}
-                className="flex flex-col justify-between rounded-xl border border-amber-200/70 bg-white p-4 transition hover:border-amber-400 hover:shadow-sm"
+                className="flex flex-col justify-between rounded-xl border border-amber-200/70 dark:border-amber-800/40 bg-white dark:bg-slate-900 p-4 transition hover:border-amber-400 dark:hover:border-amber-600 hover:shadow-sm"
               >
                 <div>
-                  <h4 className="text-sm font-bold text-slate-900">{alt.title}</h4>
-                  <p className="mt-1 text-xs leading-5 text-slate-600">
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white">{alt.title}</h4>
+                  <p className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300">
                     {alt.description}
                   </p>
                 </div>
-                <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 pt-2 text-xs font-semibold text-amber-800">
-                  <ArrowRight size={13} className="shrink-0 text-amber-600" />
+                <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 dark:border-slate-800 pt-2 text-xs font-semibold text-amber-800 dark:text-amber-400">
+                  <ArrowRight size={13} className="shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>{alt.action}</span>
                 </div>
               </div>

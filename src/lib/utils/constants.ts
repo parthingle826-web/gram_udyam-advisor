@@ -39,6 +39,10 @@ export const DEFAULT_SEASONAL_RISK = 50;
 
 export const DEFAULT_PROFIT_POTENTIAL = 50;
 
+export const MIN_APPLICANT_AGE = 18;
+
+export const DEFAULT_MAX_APPLICANT_AGE = 60;
+
 export const SUPPORTED_LANGUAGES = [
   "en",
   "hi",

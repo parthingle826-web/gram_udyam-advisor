@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  generateQuarterlySchedule,
+  safeGenerateQuarterlySchedule,
   MoratoriumRule,
 } from "@/lib/finance/schedule";
 import { Calendar, ChevronDown, ChevronUp, Clock } from "lucide-react";
@@ -29,11 +29,18 @@ export default function RepaymentTable({
   const [rule, setRule] = useState<MoratoriumRule>("INTEREST_ONLY");
   const [expanded, setExpanded] = useState(false);
 
-  if (!loanAmount || loanAmount <= 0) {
+  if (
+    !loanAmount ||
+    loanAmount <= 0 ||
+    !tenureYears ||
+    tenureYears <= 0 ||
+    !Number.isFinite(interestRate) ||
+    interestRate < 0
+  ) {
     return null;
   }
 
-  const schedule = generateQuarterlySchedule(
+  const schedule = safeGenerateQuarterlySchedule(
     loanAmount,
     interestRate,
     tenureYears,
@@ -41,36 +48,40 @@ export default function RepaymentTable({
     rule
   );
 
+  if (!schedule || !schedule.quarters || schedule.quarters.length === 0) {
+    return null;
+  }
+
   const displayQuarters = expanded
     ? schedule.quarters
     : schedule.quarters.slice(0, 6);
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
      
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-600">
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
             <Calendar size={14} />
             {t("amortizationScheduleTitle")}
           </div>
-          <h2 className="mt-1 text-2xl font-bold text-slate-900">
+          <h2 className="mt-1 text-2xl font-bold text-slate-900 dark:text-white">
             {t("quarterlyScheduleHeading")}
           </h2>
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
             {schedule.totalQuarters} {t("thQuarter")} ({tenureYears} {t("tenure")}) • {t("interestRate")}: {interestRate}% p.a.
           </p>
         </div>
 
        
-        <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 p-1 text-xs">
+        <div className="flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-1 text-xs">
           <button
             type="button"
             onClick={() => setRule("INTEREST_ONLY")}
             className={`rounded-lg px-3 py-1.5 font-semibold transition ${
               rule === "INTEREST_ONLY"
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
             {t("interestOnlyBtn")}
@@ -80,8 +91,8 @@ export default function RepaymentTable({
             onClick={() => setRule("FULLY_DEFERRED")}
             className={`rounded-lg px-3 py-1.5 font-semibold transition ${
               rule === "FULLY_DEFERRED"
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
             {t("fullyDeferredBtn")}
@@ -90,16 +101,16 @@ export default function RepaymentTable({
       </div>
 
       
-      <div className="mt-4 rounded-xl border border-indigo-100 bg-indigo-50/60 p-4 text-xs leading-5 text-indigo-950">
+      <div className="mt-4 rounded-xl border border-indigo-100 dark:border-indigo-900/50 bg-indigo-50/60 dark:bg-indigo-950/40 p-4 text-xs leading-5 text-indigo-950 dark:text-indigo-200">
         <div className="flex items-start gap-2.5">
-          <Clock size={16} className="mt-0.5 shrink-0 text-indigo-600" />
+          <Clock size={16} className="mt-0.5 shrink-0 text-indigo-600 dark:text-indigo-400" />
           <div>
             <span className="font-bold">
               {rule === "INTEREST_ONLY"
                 ? `${t("statusMoratorium")}: ${moratoriumMonths} Months (${t("interestOnlyBtn")})`
                 : `${t("statusMoratorium")}: ${moratoriumMonths} Months (${t("fullyDeferredBtn")})`}
             </span>
-            <p className="mt-0.5 text-slate-600">
+            <p className="mt-0.5 text-slate-600 dark:text-slate-300">
               {rule === "INTEREST_ONLY"
                 ? `During the initial ${moratoriumMonths} months (${schedule.moratoriumQuarters} quarter${
                     schedule.moratoriumQuarters > 1 ? "s" : ""
@@ -114,45 +125,45 @@ export default function RepaymentTable({
 
       
       <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
-          <p className="text-xs font-medium text-slate-500 uppercase">{t("sanctionedLoan")}</p>
-          <p className="mt-1 text-2xl font-bold text-slate-900">
+        <div className="rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 p-4">
+          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase">{t("sanctionedLoan")}</p>
+          <p className="mt-1 text-2xl font-bold text-slate-900 dark:text-white">
             {formatCurrency(schedule.principal)}
           </p>
-          <p className="mt-0.5 text-[11px] text-slate-500">{t("principalDisbursed")}</p>
+          <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">{t("principalDisbursed")}</p>
         </div>
 
-        <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
-          <p className="text-xs font-medium text-slate-500 uppercase">{t("regularQuarterlyEmi")}</p>
-          <p className="mt-1 text-2xl font-bold text-indigo-600">
+        <div className="rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 p-4">
+          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase">{t("regularQuarterlyEmi")}</p>
+          <p className="mt-1 text-2xl font-bold text-indigo-600 dark:text-indigo-400">
             {formatCurrency(schedule.regularQuarterlyInstallment)}
           </p>
-          <p className="mt-0.5 text-[11px] text-slate-500">
+          <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
             ~{formatCurrency(schedule.regularQuarterlyInstallment / 3)}/month
           </p>
         </div>
 
-        <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
-          <p className="text-xs font-medium text-slate-500 uppercase">{t("totalInterest")}</p>
-          <p className="mt-1 text-2xl font-bold text-amber-600">
+        <div className="rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 p-4">
+          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase">{t("totalInterest")}</p>
+          <p className="mt-1 text-2xl font-bold text-amber-600 dark:text-amber-400">
             {formatCurrency(schedule.totalInterestPaid)}
           </p>
-          <p className="mt-0.5 text-[11px] text-slate-500">{t("overFullTenure")}</p>
+          <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">{t("overFullTenure")}</p>
         </div>
 
-        <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
-          <p className="text-xs font-medium text-slate-500 uppercase">{t("totalOutlay")}</p>
-          <p className="mt-1 text-2xl font-bold text-slate-900">
+        <div className="rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 p-4">
+          <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase">{t("totalOutlay")}</p>
+          <p className="mt-1 text-2xl font-bold text-slate-900 dark:text-white">
             {formatCurrency(schedule.totalRepayment)}
           </p>
-          <p className="mt-0.5 text-[11px] text-slate-500">{t("principalPlusInterest")}</p>
+          <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">{t("principalPlusInterest")}</p>
         </div>
       </div>
 
      
-      <div className="mt-6 overflow-x-auto rounded-xl border border-slate-200">
+      <div className="mt-6 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
         <table className="w-full text-left text-xs">
-          <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+          <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/70 text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
             <tr>
               <th className="px-3.5 py-3">{t("thQuarter")}</th>
               <th className="px-3.5 py-3">{t("thOpeningBal")}</th>
@@ -163,41 +174,41 @@ export default function RepaymentTable({
               <th className="px-3.5 py-3">{t("thStatus")}</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {displayQuarters.map((row) => (
               <tr
                 key={row.quarter}
                 className={
                   row.isMoratorium
-                    ? "bg-amber-50/40 font-medium"
-                    : "hover:bg-slate-50/70"
+                    ? "bg-amber-50/40 dark:bg-amber-950/20 font-medium"
+                    : "hover:bg-slate-50/70 dark:hover:bg-slate-800/40"
                 }
               >
-                <td className="px-3.5 py-2.5 font-bold text-slate-900">
+                <td className="px-3.5 py-2.5 font-bold text-slate-900 dark:text-white">
                   Q{row.quarter} (Yr {row.year})
                 </td>
-                <td className="px-3.5 py-2.5 text-slate-700">
+                <td className="px-3.5 py-2.5 text-slate-700 dark:text-slate-300">
                   {formatCurrency(row.openingPrincipal)}
                 </td>
-                <td className="px-3.5 py-2.5 font-semibold text-emerald-700">
+                <td className="px-3.5 py-2.5 font-semibold text-emerald-700 dark:text-emerald-400">
                   {formatCurrency(row.principalPaid)}
                 </td>
-                <td className="px-3.5 py-2.5 text-amber-700">
+                <td className="px-3.5 py-2.5 text-amber-700 dark:text-amber-400">
                   {formatCurrency(row.interestPaid)}
                 </td>
-                <td className="px-3.5 py-2.5 font-bold text-slate-900">
+                <td className="px-3.5 py-2.5 font-bold text-slate-900 dark:text-white">
                   {formatCurrency(row.totalInstallment)}
                 </td>
-                <td className="px-3.5 py-2.5 text-slate-700">
+                <td className="px-3.5 py-2.5 text-slate-700 dark:text-slate-300">
                   {formatCurrency(row.closingPrincipal)}
                 </td>
                 <td className="px-3.5 py-2.5">
                   {row.isMoratorium ? (
-                    <span className="inline-flex items-center rounded-md bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                    <span className="inline-flex items-center rounded-md bg-amber-100 dark:bg-amber-950/60 px-2 py-0.5 text-[10px] font-bold text-amber-800 dark:text-amber-300">
                       {t("statusMoratorium")}
                     </span>
                   ) : (
-                    <span className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600">
+                    <span className="inline-flex items-center rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[10px] font-medium text-slate-600 dark:text-slate-400">
                       {t("statusAmortizing")}
                     </span>
                   )}
@@ -214,7 +225,7 @@ export default function RepaymentTable({
           <button
             type="button"
             onClick={() => setExpanded(!expanded)}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 hover:text-indigo-800"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
           >
             {expanded ? (
               <>
@@ -231,7 +242,7 @@ export default function RepaymentTable({
         </div>
       )}
 
-      <p className="mt-4 text-[11px] leading-4 text-slate-500">
+      <p className="mt-4 text-[11px] leading-4 text-slate-500 dark:text-slate-400">
         {t("repaymentFootnote")}
       </p>
     </div>

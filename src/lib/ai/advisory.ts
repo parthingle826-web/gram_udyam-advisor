@@ -4,6 +4,7 @@ import type { SupportedLanguage } from "@/lib/utils/constants";
 import { buildAdvisoryPrompt } from "./prompts";
 import { generateWatsonxAdvisory } from "./ibm";
 import { generateOpenAIAdvisory } from "./openai";
+import { calculateViabilityScore } from "@/lib/viability/score";
 
 export interface GenerateAdvisoryParams {
   assessment: any;
@@ -123,6 +124,25 @@ export function generateDeterministicAdvisory(
   const isHindi = language === "hi";
   const isMarathi = language === "mr";
 
+  const viability = calculateViabilityScore({
+    marketDemand: assessment?.marketDemand ?? 70,
+    competition: assessment?.competition ?? 40,
+    budgetFit: assessment?.budgetFit ?? 75,
+    localResources: assessment?.localResources ?? 60,
+    seasonalRisk: assessment?.seasonalRisk ?? 30,
+    profitPotential: assessment?.profitPotential ?? 70,
+    experienceYears: assessment?.experienceYears,
+    hasLandOrShop: assessment?.hasLandOrShop,
+    monthlyRevenue: assessment?.monthlyRevenue,
+    operatingExpenses: assessment?.operatingExpenses,
+    monthlyEMI: emi,
+    category: cat,
+    marginCapital: assessment?.marginCapital,
+    projectCost: cost,
+    competitorCount: compCount,
+  });
+  const dynamicConfidence = viability.score;
+
   let rec: AdvisoryRecommendation = "START_SMALL";
   if (suitable && compCount <= 3) {
     rec = "START";
@@ -137,7 +157,7 @@ export function generateDeterministicAdvisory(
         "en-IN"
       )} और मासिक ईएमआई ₹${emi.toLocaleString("en-IN")} है।`,
       recommendation: rec,
-      confidence: 82,
+      confidence: dynamicConfidence,
       keyReasons: [
         `स्थानीय बाजार में लगभग ${compCount} सक्रिय प्रतिस्पर्धी हैं।`,
         suitable
@@ -194,9 +214,9 @@ export function generateDeterministicAdvisory(
       headline: `${bName} - ग्राम उद्योग सल्लागार मार्गदर्शन`,
       summary: `${cat} व्यवसायासाठी अंदाजे प्रकल्प खर्च ₹${cost.toLocaleString(
         "en-IN"
-      )} आणि मासिक हप्ता ₹${emi.toLocaleString("en-IN")} आहे.`,
+      )} आणि मासिक हप्ता ₹${emi.toLocaleString("en-IN")} आहे।`,
       recommendation: rec,
-      confidence: 80,
+      confidence: dynamicConfidence,
       keyReasons: [
         `स्थानिक भागात सुमारे ${compCount} व्यावसायिक आधीच कार्यरत आहेत.`,
         suitable
@@ -241,7 +261,7 @@ export function generateDeterministicAdvisory(
       "en-IN"
     )} and monthly EMI of ₹${emi.toLocaleString("en-IN")}.`,
     recommendation: rec,
-    confidence: 85,
+    confidence: dynamicConfidence,
     keyReasons: [
       `Local competitor presence indicates ${compCount} competing business${
         compCount === 1 ? "" : "es"

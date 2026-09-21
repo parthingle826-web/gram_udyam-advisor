@@ -1,4 +1,9 @@
 export interface BusinessAssessment {
+  fullName?: string;
+  age?: number;
+  mobileNumber?: string;
+  address?: string;
+
   businessName: string;
   category: string;
 

@@ -1,5 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { generateQuarterlySchedule } from "@/lib/finance/schedule";
+import {
+  generateQuarterlySchedule,
+  safeGenerateQuarterlySchedule,
+} from "@/lib/finance/schedule";
 
 describe("Quarter-by-Quarter Amortization Schedule", () => {
   test("generates 12 quarters for Micro Finance (3 years)", () => {
@@ -79,4 +82,17 @@ describe("Quarter-by-Quarter Amortization Schedule", () => {
     expect(() => generateQuarterlySchedule(100000, -2, 7)).toThrow();
     expect(() => generateQuarterlySchedule(100000, 8.0, 0)).toThrow();
   });
+
+  test("safeGenerateQuarterlySchedule returns null on non-positive or invalid inputs without throwing", () => {
+    expect(safeGenerateQuarterlySchedule(0, 8.0, 7)).toBeNull();
+    expect(safeGenerateQuarterlySchedule(100000, -2, 7)).toBeNull();
+    expect(safeGenerateQuarterlySchedule(100000, 8.0, 0)).toBeNull();
+    expect(safeGenerateQuarterlySchedule(100000, 8.0, -5)).toBeNull();
+    expect(safeGenerateQuarterlySchedule(NaN, 8.0, 5)).toBeNull();
+
+    const valid = safeGenerateQuarterlySchedule(100000, 6.5, 3, 3);
+    expect(valid).not.toBeNull();
+    expect(valid?.quarters.length).toBe(12);
+  });
 });
+

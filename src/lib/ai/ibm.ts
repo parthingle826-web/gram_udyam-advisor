@@ -134,3 +134,62 @@ export async function generateWatsonxAdvisory(
   const cleaned = cleanJsonOutput(generatedText);
   return JSON.parse(cleaned) as AIAdvisory;
 }
+
+export async function callWatsonxText(prompt: string): Promise<string> {
+  const apiKey =
+    process.env.WATSONX_API_KEY || process.env.IBM_CLOUD_API_KEY;
+  const projectId = process.env.WATSONX_PROJECT_ID;
+  const baseUrl =
+    process.env.WATSONX_URL || "https://us-south.ml.cloud.ibm.com";
+  const modelId =
+    process.env.WATSONX_MODEL_ID || "ibm/granite-3-8b-instruct";
+
+  if (!apiKey || !projectId) {
+    throw new Error("Watsonx credentials not configured.");
+  }
+
+  const token = await getWatsonxIAMToken(apiKey);
+  const endpoint = `${baseUrl.replace(
+    /\/$/,
+    ""
+  )}/ml/v1/text/generation?version=2023-05-29`;
+
+  const payload = {
+    model_id: modelId,
+    project_id: projectId,
+    input: prompt,
+    parameters: {
+      decoding_method: "greedy",
+      max_new_tokens: 800,
+      min_new_tokens: 1,
+      temperature: 0.3,
+      repetition_penalty: 1.05,
+    },
+  };
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(
+      `Watsonx text generation failed (${response.status}): ${errorBody}`
+    );
+  }
+
+  const data = (await response.json()) as WatsonxTextGenResponse;
+  const generatedText = data.results?.[0]?.generated_text;
+
+  if (!generatedText) {
+    throw new Error("Watsonx Granite model returned an empty completion.");
+  }
+
+  return generatedText.trim();
+}

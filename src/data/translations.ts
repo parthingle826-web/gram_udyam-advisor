@@ -75,20 +75,50 @@ export const translations = {
     footerTagline: "AI-powered sustainable rural entrepreneurship",
 
    
-    welcomeBack: "Welcome Back",
-    loginSubtitle: "Login using your mobile number",
-    mobileNumber: "Mobile Number",
-    enterMobilePlaceholder: "Enter 10 digit mobile number",
-    sendOtp: "Send OTP",
-    authDisclaimer:
-      "Your mobile number will be used for secure authentication.",
-    backToHome: "Back to Home",
+    chatAdvisorTitle: "Gram Udyam AI Advisor",
+    chatAdvisorSubtitle:
+      "Ask follow-ups about your viability score, loan, or next steps",
+    chatPlaceholder: "Ask about your score, scheme, EMI, or risks...",
+    askScoreChip: "Why is my viability score only this much?",
+    askSchemeChip: "Explain my loan scheme & monthly EMI",
+    askRisksChip: "How can I reduce risks in my village?",
+    askBankChip: "What documents should I take to the bank?",
+    chatThinking: "AI Advisor is analyzing your report...",
+    clearChat: "Reset Chat",
+    closeChat: "Close Chat",
 
     
     assessmentStepBadge: "Step 1 of 3: Business & Location Intake",
     assessmentPageTitle: "Gram Udyam Business Assessment",
     assessmentPageSubtitle:
       "Provide your business idea, margin capital, village location, and sector experience. Our deterministic financial calculator and hyper-local GIS engine will generate your feasibility report.",
+    personalInformation: "Applicant Information",
+    personalInfoDesc:
+      "Provide applicant identification, age qualification, and contact details.",
+    applicantFullName: "Full Name",
+    applicantFullNamePlaceholder: "e.g. Ramesh Kumar Patel",
+    applicantAge: "Applicant Age",
+    applicantAgePlaceholder: "e.g. 32",
+    applicantAddress: "Residential / Work Address",
+    applicantAddressPlaceholder: "House / Street / Landmark / Area",
+    applicantMobile: "Mobile Number",
+    applicantMobilePlaceholder: "10-digit mobile number (e.g. 9876543210)",
+    optionalBadge: "Optional",
+    errFullNameRequired: "Full name is required.",
+    errAgeRequired: "Applicant age is required.",
+    errAgeInvalid: "Age must be a valid number between 1 and 120.",
+    errAgeUnder18:
+      "Under Indian banking guidelines and the Micro Finance / Term Loan scheme rules, applicants must be at least 18 years old to independently apply for a loan. Co-applicant / guardian-based applications are not supported in this tool yet.",
+    seniorNoticeBanner:
+      "Most concession/margin schemes set an upper applicant age limit (typically 50–60 depending on the agency/SCA). You may not be eligible for standard Micro Finance or Term Loan schemes as an individual borrower. Consider applying through a younger family member as the primary applicant, or explore senior-citizen enterprise grants / self-help group collective schemes.",
+    errAddressRequired: "Address is required.",
+    errMobileRequired: "10-digit mobile number is required.",
+    errMobileInvalid:
+      "Mobile number must be a valid 10-digit Indian number starting with 6, 7, 8, or 9.",
+    errVillageRequired: "Village name is required.",
+    errBlockRequired: "Block / Taluka is required.",
+    errDistrictRequired: "District is required.",
+    errStateRequired: "State is required.",
     businessInformation: "Business Information",
     businessInfoDesc:
       "Tell us about the business you want to start or expand.",
@@ -449,20 +479,50 @@ export const translations = {
     footerTagline: "AI-संचालित टिकाऊ ग्रामीण उद्यमिता",
 
    
-    welcomeBack: "वापसी पर स्वागत है",
-    loginSubtitle: "अपने मोबाइल नंबर से लॉगिन करें",
-    mobileNumber: "मोबाइल नंबर",
-    enterMobilePlaceholder: "10 अंकों का मोबाइल नंबर दर्ज करें",
-    sendOtp: "OTP भेजें",
-    authDisclaimer:
-      "आपके मोबाइल नंबर का उपयोग सुरक्षित प्रमाणीकरण के लिए किया जाएगा।",
-    backToHome: "होम पर वापस जाएं",
+    chatAdvisorTitle: "ग्राम उद्यम एआई सलाहकार",
+    chatAdvisorSubtitle:
+      "अपने व्यवहार्यता स्कोर, ऋण योजना या अगले कदमों के बारे में पूछें",
+    chatPlaceholder: "अपने स्कोर, योजना, ईएमआई या जोखिमों के बारे में पूछें...",
+    askScoreChip: "मेरा व्यवहार्यता स्कोर इतना क्यों है?",
+    askSchemeChip: "मेरी ऋण योजना और मासिक ईएमआई समझाएं",
+    askRisksChip: "गाँव में व्यावसायिक जोखिम कैसे कम करें?",
+    askBankChip: "बैंक शाखा में कौन से दस्तावेज़ लेकर जाएं?",
+    chatThinking: "एआई सलाहकार रिपोर्ट का विश्लेषण कर रहा है...",
+    clearChat: "चैट रीसेट करें",
+    closeChat: "चैट बंद करें",
 
     
     assessmentStepBadge: "चरण 1 का 3: व्यवसाय और स्थान विवरण",
     assessmentPageTitle: "ग्राम उद्यम व्यवसाय मूल्यांकन",
     assessmentPageSubtitle:
       "अपना व्यावसायिक विचार, मार्जिन पूंजी, गाँव का स्थान और अनुभव प्रदान करें। हमारा वित्तीय कैलकुलेटर और हाइपर-लोकल GIS इंजन आपकी व्यवहार्यता रिपोर्ट तैयार करेगा।",
+    personalInformation: "आवेदक की जानकारी",
+    personalInfoDesc:
+      "आवेदक की पहचान, आयु पात्रता और संपर्क विवरण प्रदान करें।",
+    applicantFullName: "पूरा नाम",
+    applicantFullNamePlaceholder: "उदा. रमेश कुमार पटेल",
+    applicantAge: "आवेदक की आयु",
+    applicantAgePlaceholder: "उदा. 32",
+    applicantAddress: "निवास / कार्य का पता",
+    applicantAddressPlaceholder: "मकान नं., सड़क, लैंडमार्क या क्षेत्र",
+    applicantMobile: "मोबाइल नंबर",
+    applicantMobilePlaceholder: "10 अंकों का मोबाइल नंबर",
+    optionalBadge: "ऐच्छिक",
+    errFullNameRequired: "पूरा नाम आवश्यक है।",
+    errAgeRequired: "आवेदक की आयु आवश्यक है।",
+    errAgeInvalid: "आयु 1 से 120 के बीच होनी चाहिए।",
+    errAgeUnder18:
+      "भारतीय बैंकिंग नियमों और ऋण योजना के अनुसार, स्वतंत्र रूप से ऋण आवेदन के लिए न्यूनतम आयु 18 वर्ष होनी चाहिए। सह-आवेदक / अभिभावक आधारित आवेदन अभी उपलब्ध नहीं है।",
+    seniorNoticeBanner:
+      "अधिकांश रियायती योजनाओं में अधिकतम आयु सीमा (सामान्यतः 50-60 वर्ष) होती है। आप व्यक्तिगत रूप से मानक योजनाओं के लिए पात्र नहीं हो सकते हैं। परिवार के किसी युवा सदस्य को मुख्य आवेदक बनाने पर विचार करें या वरिष्ठ नागरिक सहायता योजनाएं देखें।",
+    errAddressRequired: "पता आवश्यक है।",
+    errMobileRequired: "10 अंकों का मोबाइल नंबर आवश्यक है।",
+    errMobileInvalid:
+      "कृपया 6, 7, 8 या 9 से शुरू होने वाला मान्य 10 अंकों का मोबाइल नंबर दर्ज करें।",
+    errVillageRequired: "गांव का नाम आवश्यक है।",
+    errBlockRequired: "ब्लॉक / तालुका आवश्यक है।",
+    errDistrictRequired: "जिला आवश्यक है।",
+    errStateRequired: "राज्य आवश्यक है।",
     businessInformation: "व्यवसाय की जानकारी",
     businessInfoDesc:
       "उस व्यवसाय के बारे में बताएं जिसे आप शुरू या विस्तारित करना चाहते हैं।",
@@ -824,20 +884,50 @@ export const translations = {
     footerTagline: "AI-सक्षम शाश्वत ग्रामीण उद्योजकता",
 
   
-    welcomeBack: "पुन्हा स्वागत आहे",
-    loginSubtitle: "तुमच्या मोबाईल नंबरने लॉगिन करा",
-    mobileNumber: "मोबाईल नंबर",
-    enterMobilePlaceholder: "10 अंकी मोबाईल नंबर टाका",
-    sendOtp: "OTP पाठवा",
-    authDisclaimer:
-      "तुमचा मोबाईल नंबर सुरक्षित प्रमाणीकरणासाठी वापरला जाईल.",
-    backToHome: "मुख्यपृष्ठावर परत जा",
+    chatAdvisorTitle: "ग्राम उद्यम AI सल्लागार",
+    chatAdvisorSubtitle:
+      "तुमच्या व्यवहार्यता स्कोअर, कर्ज योजना किंवा पुढील पावलांबद्दल विचारा",
+    chatPlaceholder: "तुमच्या स्कोअर, योजना, EMI किंवा जोखमींबद्दल विचारा...",
+    askScoreChip: "माझा व्यवहार्यता स्कोअर इतकाच का आहे?",
+    askSchemeChip: "माझी कर्ज योजना आणि मासिक EMI समजावून सांगा",
+    askRisksChip: "गावात व्यावसायिक जोखीम कशी कमी करावी?",
+    askBankChip: "बँकेत जाताना कोणती कागदपत्रे सोबत ठेवावीत?",
+    chatThinking: "AI सल्लागार अहवालाचे विश्लेषण करत आहे...",
+    clearChat: "चॅट रीसेट करा",
+    closeChat: "चॅट बंद करा",
 
   
     assessmentStepBadge: "टप्पा 1 पैकी 3: व्यवसाय आणि स्थान तपशील",
     assessmentPageTitle: "ग्राम उद्यम व्यवसाय मूल्यांकन",
     assessmentPageSubtitle:
       "तुमची व्यवसाय कल्पना, मार्जिन भांडवल, गावाचे स्थान आणि अनुभव द्या. आमचे आर्थिक कॅल्क्युलेटर आणि स्थानिक GIS इंजिन तुमचा व्यवहार्यता अहवाल तयार करेल.",
+    personalInformation: "अर्जदाराची माहिती",
+    personalInfoDesc:
+      "अर्जदाराची ओळख, वयाची पात्रता आणि संपर्क तपशील द्या.",
+    applicantFullName: "पूर्ण नाव",
+    applicantFullNamePlaceholder: "उदा. रमेश कुमार पाटील",
+    applicantAge: "अर्जदाराचे वय",
+    applicantAgePlaceholder: "उदा. 32",
+    applicantAddress: "रहिवासी / कामाचा पत्ता",
+    applicantAddressPlaceholder: "घर क्र., रस्ता, खूण किंवा परिसर",
+    applicantMobile: "मोबाईल नंबर",
+    applicantMobilePlaceholder: "10 अंकी मोबाईल नंबर",
+    optionalBadge: "पर्यायी",
+    errFullNameRequired: "पूर्ण नाव आवश्यक आहे.",
+    errAgeRequired: "अर्जदाराचे वय आवश्यक आहे.",
+    errAgeInvalid: "वय 1 ते 120 च्या दरम्यान असावे.",
+    errAgeUnder18:
+      "भारतीय बँकिंग नियमांनुसार आणि कर्ज योजनेनुसार, स्वतंत्रपणे कर्ज अर्ज करण्यासाठी वय किमान 18 वर्षे असणे आवश्यक आहे. सह-अर्जदार / पालकांवर आधारित अर्ज सध्या उपलब्ध नाही.",
+    seniorNoticeBanner:
+      "बहुतेक सवलतीच्या योजनांमध्ये कमाल वयोमर्यादा (सामान्यतः 50-60 वर्षे) असते. आपण वैयक्तिक कर्जदार म्हणून पात्र नसू शकता. कुटुंबातील तरुण सदस्यास मुख्य अर्जदार करण्याचा विचार करा किंवा ज्येष्ठ नागरिक योजना तपासा.",
+    errAddressRequired: "पत्ता आवश्यक आहे.",
+    errMobileRequired: "10 अंकी मोबाईल नंबर आवश्यक आहे.",
+    errMobileInvalid:
+      "कृपया 6, 7, 8 किंवा 9 ने सुरू होणारा वैध 10 अंकी मोबाईल नंबर प्रविष्ट करा.",
+    errVillageRequired: "गावाचे नाव आवश्यक आहे.",
+    errBlockRequired: "तालुका आवश्यक आहे.",
+    errDistrictRequired: "जिल्हा आवश्यक आहे.",
+    errStateRequired: "राज्य आवश्यक आहे.",
     businessInformation: "व्यवसायाची माहिती",
     businessInfoDesc:
       "तुम्हाला सुरू करायच्या किंवा वाढवायच्या व्यवसायाबद्दल सांगा.",

@@ -38,3 +38,28 @@ export async function generateOpenAIAdvisory(
   const cleaned = cleanJsonOutput(content);
   return JSON.parse(cleaned) as AIAdvisory;
 }
+
+export async function callOpenAIChatText(
+  messages: Array<{ role: "system" | "user" | "assistant"; content: string }>
+): Promise<string> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY is not configured in environment.");
+  }
+
+  const openai = new OpenAI({ apiKey });
+  const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
+
+  const response = await openai.chat.completions.create({
+    model,
+    messages,
+    temperature: 0.3,
+  });
+
+  const content = response.choices[0]?.message?.content;
+  if (!content) {
+    throw new Error("OpenAI returned an empty completion.");
+  }
+
+  return content.trim();
+}
